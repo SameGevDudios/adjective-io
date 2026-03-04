@@ -1,0 +1,6 @@
+@WifeGift_HostAddress = http://localhost:5289
+
+GET {{WifeGift_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
