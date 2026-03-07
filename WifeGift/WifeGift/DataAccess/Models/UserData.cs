@@ -2,10 +2,10 @@
 {
     public class UserData : BaseEntity
     {
-        public string UserId { get; set; }
+        public required string UserId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public required ApplicationUser User { get; set; }
 
-        public ICollection<Preference> Preferences { get; set; }
+        public required ICollection<Preference> Preferences { get; set; }
     }
 }

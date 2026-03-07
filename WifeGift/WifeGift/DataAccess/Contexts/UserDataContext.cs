@@ -3,8 +3,7 @@ using WifeGift.DataAccess.Models;
 
 namespace WifeGift.DataAccess.Contexts
 {
-    public class UserDataContext
-    : DbContext
+    public class UserDataContext : DbContext
     {
         public UserDataContext(DbContextOptions<UserDataContext> options)
         : base(options) { }

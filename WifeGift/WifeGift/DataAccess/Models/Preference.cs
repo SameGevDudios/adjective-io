@@ -4,9 +4,9 @@
     {
         public Guid UserDataId { get; set; }
 
-        required public UserData UserData { get; set; }
+        public required UserData UserData { get; set; }
 
-        required public string Adjective { get; set; }
+        public required string Adjective { get; set; }
 
         public double Weight { get; set; }
     }

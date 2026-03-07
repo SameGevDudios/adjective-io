@@ -4,6 +4,6 @@ namespace WifeGift.DataAccess.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public virtual UserData UserData { get; set; }
+        public required virtual UserData UserData { get; set; }
     }
 }
