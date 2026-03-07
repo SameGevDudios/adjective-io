@@ -41,16 +41,25 @@ namespace WifeGift.Startup
                 options.UseSnakeCaseNamingConvention();
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<AuthContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentityApiEndpoints<ApplicationUser>()
+                .AddEntityFrameworkStores<AuthContext>();
 
 
             services.AddOpenApiDocument(options =>
             {
                 options.Title = "AdjectiveIo API Doc";
                 options.Version = "1.0";
+
+                options.AddSecurity("JWT", Enumerable.Empty<string>(), new NSwag.OpenApiSecurityScheme
+                {
+                    Type = NSwag.OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = NSwag.OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Insert a Bearer token"
+                });
             });
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
@@ -75,7 +84,14 @@ namespace WifeGift.Startup
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+
+                var versionedAuthGroup = endpoints.MapGroup("api/v1");
+                versionedAuthGroup.MapIdentityApi<ApplicationUser>()
+                    .WithTags("auth");
+            });
 
             dbInitializer.Initialize();
         }
