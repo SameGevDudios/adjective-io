@@ -2,11 +2,11 @@
 
 namespace WifeGift.DataAccess.DbInitializiation
 {
-    public class EfDbInitializer<T> : IDbInitializer<T> where T : ICollection<DbContext>
+    public class EfDbInitializer : IDbInitializer
     {
-        private readonly T _dbContexts;
+        private readonly ICollection<DbContext> _dbContexts;
 
-        public EfDbInitializer(T dbContext)
+        public EfDbInitializer(ICollection<DbContext> dbContext)
         {
             _dbContexts = dbContext;
         }

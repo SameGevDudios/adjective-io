@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace WifeGift.DataAccess.DbInitializiation
+﻿namespace WifeGift.DataAccess.DbInitializiation
 {
-    public interface IDbInitializer<T>
+    public interface IDbInitializer
     {
         void Initialize();
     }
