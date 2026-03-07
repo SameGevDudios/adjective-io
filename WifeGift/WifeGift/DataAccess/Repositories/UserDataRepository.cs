@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WifeGift.DataAccess.Contexts;
 using WifeGift.DataAccess.Models;
 
 namespace WifeGift.DataAccess.Repositories
 {
-    public class EfRepository<T> : IRepository<T> where T : BaseEntity
+    public class UserDataRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly DbContext _dbContext;
+        private readonly UserDataContext _dbContext;
 
-        public EfRepository(DbContext dbContext)
+        public UserDataRepository(UserDataContext dbContext)
         {
             _dbContext = dbContext;
         }
