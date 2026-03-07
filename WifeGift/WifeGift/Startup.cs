@@ -21,25 +21,23 @@ namespace WifeGift.Startup
             services.AddControllers().AddMvcOptions(x =>
                 x.SuppressAsyncSuffixInActionNames = false);
 
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-
             services.AddDbContext<UserDataContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("AdjectiveIoUserDataDb"));
                 options.UseSnakeCaseNamingConvention();
-                options.UseLazyLoadingProxies();
             });
 
             services.AddDbContext<AuthContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("AdjectiveIoAuthDb"));
                 options.UseSnakeCaseNamingConvention();
-                options.UseLazyLoadingProxies();
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AuthContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped(typeof(IRepository<>), typeof(UserDataRepository<>));
 
             services.AddOpenApiDocument(options =>
             {
