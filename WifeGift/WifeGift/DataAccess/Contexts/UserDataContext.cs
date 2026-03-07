@@ -18,7 +18,12 @@ namespace WifeGift.DataAccess.Contexts
             builder.Entity<Preference>()
                 .HasOne(p => p.UserData)
                 .WithMany(u => u.Preferences)
-                .HasForeignKey(p => p.UserDataId);
+                .HasForeignKey(p => p.UserDataId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserData>()
+                .HasIndex(u => u.UserId)
+                .IsUnique();
         }
     }
 }

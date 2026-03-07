@@ -4,8 +4,8 @@
     {
         public required string UserId { get; set; }
 
-        public required ApplicationUser User { get; set; }
-
         public required ICollection<Preference> Preferences { get; set; }
+
+        public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
     }
 }
