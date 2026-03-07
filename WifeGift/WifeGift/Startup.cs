@@ -4,6 +4,7 @@ using WifeGift.DataAccess.Repositories;
 using WifeGift.DataAccess.Contexts;
 using WifeGift.DataAccess.Models;
 using WifeGift.DataAccess.DbInitializiation;
+using WifeGift.Services.ProfileService;
 
 namespace WifeGift.Startup
 {
@@ -21,6 +22,13 @@ namespace WifeGift.Startup
             services.AddControllers().AddMvcOptions(x =>
                 x.SuppressAsyncSuffixInActionNames = false);
 
+
+            services.AddScoped(typeof(IRepository<>), typeof(UserDataRepository<>));
+
+            services.AddScoped<IProfileService, ProfileService>();
+
+            services.AddScoped<IDbInitializer, EfDbInitializer>();
+
             services.AddDbContext<UserDataContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("AdjectiveIoUserDataDb"));
@@ -37,7 +45,6 @@ namespace WifeGift.Startup
                 .AddEntityFrameworkStores<AuthContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped(typeof(IRepository<>), typeof(UserDataRepository<>));
 
             services.AddOpenApiDocument(options =>
             {
