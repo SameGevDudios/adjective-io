@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using WifeGift.DataAccess.Contexts;
 using WifeGift.DataAccess.Models;
 
@@ -53,6 +54,16 @@ namespace WifeGift.DataAccess.Repositories
             _dbContext.Set<T>().Remove(entity);
 
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<T?> GetByConditionAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbContext.Set<T>().FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<IEnumerable<T>> GetListByConditionAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbContext.Set<T>().Where(predicate).ToListAsync();
         }
     }
 }

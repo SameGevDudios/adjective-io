@@ -1,4 +1,4 @@
-﻿using WifeGift.DataAccess.Models;
+﻿using System.Linq.Expressions;
 
 namespace WifeGift.DataAccess.Repositories
 {
@@ -14,6 +14,10 @@ namespace WifeGift.DataAccess.Repositories
 
         Task UpdateAsync(T entity);
 
-        Task DeleteAsync(T entity);
+        Task DeleteAsync(T entity); 
+        
+        Task<T?> GetByConditionAsync(Expression<Func<T, bool>> predicate);
+
+        Task<IEnumerable<T>> GetListByConditionAsync(Expression<Func<T, bool>> predicate);
     }
 }
