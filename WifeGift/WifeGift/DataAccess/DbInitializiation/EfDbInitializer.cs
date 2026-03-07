@@ -1,22 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WifeGift.DataAccess.Contexts;
 
 namespace WifeGift.DataAccess.DbInitializiation
 {
     public class EfDbInitializer : IDbInitializer
     {
-        private readonly ICollection<DbContext> _dbContexts;
+        private readonly AuthContext _authContext;
+        private readonly UserDataContext _userDataContext;
 
-        public EfDbInitializer(ICollection<DbContext> dbContext)
+        public EfDbInitializer(AuthContext authContext, UserDataContext userDataContext)
         {
-            _dbContexts = dbContext;
+            _authContext = authContext;
+            _userDataContext = userDataContext;
         }
 
         public void Initialize()
         {
-            foreach (var dbContext in _dbContexts)
-            {
-                dbContext.Database.EnsureCreated();
-            }
+            _authContext.Database.EnsureCreated();
+            _userDataContext.Database.EnsureCreated();
         }
     }
 }
