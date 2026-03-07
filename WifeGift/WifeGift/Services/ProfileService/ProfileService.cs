@@ -48,7 +48,7 @@ namespace WifeGift.Services.ProfileService
 
                 foreach (var pref in userPrefs)
                 {
-                    pref.Weight = Math.Max(-1.5, pref.Weight - fadeValue); // TODO: move max value '-1.5' to a configuration file
+                    pref.Weight = Math.Max(0, pref.Weight - fadeValue);
                 }
 
                 userData.LastLoginAt = now;
@@ -99,6 +99,13 @@ namespace WifeGift.Services.ProfileService
 
             if (userData == null || pref.UserDataId != userData.Id)
                 return false;
+
+            // Buff or ban the entry
+            if (Math.Abs(newWeight) > 1)
+            {
+                double edgeValue = 1.5; // TODO: move min value to a configuration file
+                newWeight = Math.Clamp(newWeight *= 1.5, -edgeValue, edgeValue); // TODO: buff value to a configuration file
+            }
 
             pref.Weight = newWeight;
             await _preferenceRepository.UpdateAsync(pref);
