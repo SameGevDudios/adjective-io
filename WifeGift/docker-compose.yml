@@ -1,0 +1,50 @@
+services:
+  app:
+    build: .
+    container_name: wifegift-api
+    ports:
+      - "5000:8080"
+    depends_on:
+      db-auth:
+        condition: service_healthy
+      db-data:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__AdjectiveIoAuthDb=Host=db-auth;Database=auth_db;Username=postgres;Password=${AUTH_DB_PASSWORD}
+      - ConnectionStrings__AdjectiveIoUserDataDb=Host=db-data;Database=user_db;Username=postgres;Password=${DATA_DB_PASSWORD}
+      - PreferenceSettings__MinDelta=${PREFERENCE_MIN_DELTA}
+      - PreferenceSettings__MaxDelta=${PREFERENCE_MAX_DELTA}
+      - PreferenceSettings__FadeRate=${PREFRENCE_FADE_RATE}
+
+  db-auth:
+    image: postgres:15
+    container_name: wifegift-db-auth
+    environment:
+      POSTGRES_PASSWORD: secret_auth_pass
+      POSTGRES_DB: auth_db
+    volumes:
+      - auth_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  db-data:
+    image: postgres:15
+    container_name: wifegift-db-data
+    environment:
+      POSTGRES_PASSWORD: secret_data_pass
+      POSTGRES_DB: user_db
+    volumes:
+      - user_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  auth_data:
+  user_data:
