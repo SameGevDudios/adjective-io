@@ -42,6 +42,12 @@ namespace WifeGift.DataAccess.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _dbContext.Set<T>().AddRangeAsync(entities);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(T entity)
         {
             _dbContext.Set<T>().Update(entity);

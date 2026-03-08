@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WifeGift.Core.Configuration.PreferenceSettings;
 using WifeGift.Core.Extensions;
 using WifeGift.Core.Services.ProfileService;
+using WifeGift.DataAccess.Models;
 using static WifeGift.DataAccess.Models.Dto;
 
 namespace WifeGift.WebHost.Controllers
@@ -38,6 +39,25 @@ namespace WifeGift.WebHost.Controllers
                 .Select(p => new PreferenceReadDto(p.Id, p.Adjective, p.Weight));
 
             return Ok(response);
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> AddRange([FromBody] List<PreferenceCreateDto> dtos)
+        {
+            var userData = await _userDataService.GetCurrentUserData(CurrentUserId);
+
+            var preferences = dtos.Select(dto => new Preference
+            {
+                Id = Guid.NewGuid(),
+                UserDataId = userData.Id,
+                Adjective = dto.Adjective,
+                Weight = dto.Weight,
+                UserData = userData,
+            }).ToList();
+
+            await _userDataService.AddRangePreferenceAsync(CurrentUserId, preferences);
+
+            return Ok(preferences);
         }
 
         [HttpPatch("{id:guid}/increment")]
