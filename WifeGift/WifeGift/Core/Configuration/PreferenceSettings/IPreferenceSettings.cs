@@ -6,7 +6,6 @@
         double MaxDelta { get; }
         double FadeRate { get; }
         double WeightAbs { get; }
-        double WeightMultiplier { get; }
         double PositivePercentage { get; }
         double NegativePercentage { get; }
     }

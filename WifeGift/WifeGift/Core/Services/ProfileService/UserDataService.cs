@@ -108,11 +108,12 @@ namespace WifeGift.Core.Services.ProfileService
             if (Math.Abs(newWeight) > 1)
             {
                 double edgeValue = _settings.WeightAbs;
-                newWeight = Math.Clamp(newWeight *= _settings.WeightMultiplier, -edgeValue, edgeValue);
+                newWeight = Math.Clamp(newWeight *= edgeValue, -edgeValue, edgeValue);
             }
 
             pref.Weight = newWeight;
             await _preferenceRepository.UpdateAsync(pref);
+
             return true;
         }
     }
