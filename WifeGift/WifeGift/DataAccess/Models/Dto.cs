@@ -6,8 +6,6 @@
         public record PreferenceCreateDto(string Adjective, double Weight);
         public record PreferenceUpdateDto(string Adjective, double Weight);
 
-        public record PreferenceWeightUpdateDto(double Weight);
-
         public record UserDataReadDto(Guid Id, string UserId, List<PreferenceReadDto> Preferences);
 
         public record UserProfileDto(
@@ -15,5 +13,8 @@
             string UserId,
             DateTime LastLoginAt,
             List<PreferenceReadDto> Preferences);
+
+        public record PrefixReadDto(Guid Id, string Title, string Subtitle);
+        public record PrefixCreateDto(string Title, string Subtitle);
     }
 }

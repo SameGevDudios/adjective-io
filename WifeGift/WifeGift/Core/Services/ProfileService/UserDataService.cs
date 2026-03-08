@@ -22,6 +22,13 @@ namespace WifeGift.Core.Services.ProfileService
             _random = new Random();
         }
 
+        public async Task<UserData> GetCurrentUserData(string userId)
+        {   
+            var userData = await _userRepository.GetByConditionAsync(u => u.UserId == userId);
+            
+            return userData;
+        }
+
         public async Task<UserData> UpdateProfileDataAsync(string userId)
         {
             var userData = await _userRepository.GetByConditionAsync(u => u.UserId == userId);
@@ -34,7 +41,8 @@ namespace WifeGift.Core.Services.ProfileService
                     Id = Guid.NewGuid(),
                     UserId = userId,
                     LastLoginAt = DateTime.UtcNow,
-                    Preferences = new List<Preference>()
+                    Preferences = new List<Preference>(),
+                    Prefixes = new List<Prefix>()
                 };
                 await _userRepository.AddAsync(userData);
                 return userData;
@@ -73,6 +81,13 @@ namespace WifeGift.Core.Services.ProfileService
             var preferences = await _preferenceRepository.GetListByConditionAsync(p => p.UserDataId == userData.Id);
 
             return userData.Preferences;
+        }
+
+        public async Task<bool> AddRangePreferenceAsync(string userId, IEnumerable<Preference> preferences)
+        {
+            await _preferenceRepository.AddRangeAsync(preferences);
+
+            return true;
         }
 
         public async Task<bool> IncreasePreferenceWeightAsync(string userId, Guid preferenceId)

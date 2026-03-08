@@ -10,6 +10,7 @@ namespace WifeGift.DataAccess.Contexts
 
         public DbSet<UserData> UserData { get; set; }
         public DbSet<Preference> Preferences { get; set; }
+        public DbSet<Prefix> Prefixes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -19,6 +20,12 @@ namespace WifeGift.DataAccess.Contexts
                 .HasOne(p => p.UserData)
                 .WithMany(u => u.Preferences)
                 .HasForeignKey(p => p.UserDataId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Prefix>()
+                .HasOne(px => px.UserData)
+                .WithMany(u => u.Prefixes)
+                .HasForeignKey(px => px.UserDataId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<UserData>()

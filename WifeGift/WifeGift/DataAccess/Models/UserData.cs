@@ -6,6 +6,8 @@
 
         public required ICollection<Preference> Preferences { get; set; }
 
+        public required ICollection<Prefix> Prefixes { get; set; }
+
         public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
     }
 }

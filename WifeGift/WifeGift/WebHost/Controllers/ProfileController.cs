@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WifeGift.Core.Services.ProfileService;
 using static WifeGift.DataAccess.Models.Dto;
 
-namespace WifeGift.Controllers
+namespace WifeGift.WebHost.Controllers
 {
     [Authorize]
     [Route("api/v1/profile")]
