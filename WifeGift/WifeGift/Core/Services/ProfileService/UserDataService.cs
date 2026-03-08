@@ -4,7 +4,7 @@ using WifeGift.DataAccess.Repositories;
 
 namespace WifeGift.Core.Services.ProfileService
 {
-    public class ProfileService : IProfileService
+    public class UserDataService : IUserDataService
     {
         private readonly IRepository<UserData> _userRepository;
 
@@ -14,7 +14,7 @@ namespace WifeGift.Core.Services.ProfileService
 
         private readonly Random _random;
 
-        public ProfileService(IRepository<UserData> userRepository, IRepository<Preference> preferenceRepository, IPreferenceSettings settings)
+        public UserDataService(IRepository<UserData> userRepository, IRepository<Preference> preferenceRepository, IPreferenceSettings settings)
         {
             _userRepository = userRepository;
             _preferenceRepository = preferenceRepository;

@@ -11,19 +11,19 @@ namespace WifeGift.Controllers
     [Route("api/v1/preferences")]
     public class PreferencesController : BaseApiController
     {
-        private readonly IProfileService _profileService;
+        private readonly IUserDataService _userDataService;
         private readonly IPreferenceSettings _settings;
 
-        public PreferencesController(IProfileService profileService, IPreferenceSettings settings)
+        public PreferencesController(IUserDataService userDataService, IPreferenceSettings settings)
         {
-            _profileService = profileService;
+            _userDataService = userDataService;
             _settings = settings;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PreferenceReadDto>>> GetAll()
         {
-            var allPreferences = await _profileService.GetUserPreferencesAsync(CurrentUserId);
+            var allPreferences = await _userDataService.GetUserPreferencesAsync(CurrentUserId);
 
             var positivePreferences = allPreferences.Where(p => p.Weight >= 0).ToList();
             var negativePreferences = allPreferences.Where(p => p.Weight >= -1 && p.Weight < 0).ToList();
@@ -42,10 +42,10 @@ namespace WifeGift.Controllers
 
         [HttpPatch("{id:guid}/increment")]
         public async Task<IActionResult> IncrementWeight(Guid id) =>
-            await _profileService.IncreasePreferenceWeightAsync(CurrentUserId, id) ? Ok() : BadRequest();
+            await _userDataService.IncreasePreferenceWeightAsync(CurrentUserId, id) ? Ok() : BadRequest();
 
         [HttpPatch("{id:guid}/decrement")]
         public async Task<IActionResult> Decrement(Guid id) =>
-            await _profileService.DecreasePreferenceWeightAsync(CurrentUserId, id) ? Ok() : BadRequest();
+            await _userDataService.DecreasePreferenceWeightAsync(CurrentUserId, id) ? Ok() : BadRequest();
     }
 }

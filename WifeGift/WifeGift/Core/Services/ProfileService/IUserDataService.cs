@@ -2,7 +2,7 @@
 
 namespace WifeGift.Core.Services.ProfileService
 {
-    public interface IProfileService
+    public interface IUserDataService
     {
         Task<UserData> UpdateProfileDataAsync(string userId);
 

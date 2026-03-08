@@ -31,7 +31,7 @@ namespace WifeGift.Startup
 
             services.AddScoped(typeof(IRepository<>), typeof(UserDataRepository<>));
 
-            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IUserDataService, UserDataService>();
 
             services.AddScoped<IDbInitializer, EfDbInitializer>();
 

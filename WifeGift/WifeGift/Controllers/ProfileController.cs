@@ -9,17 +9,17 @@ namespace WifeGift.Controllers
     [Route("api/v1/profile")]
     public class ProfileController : BaseApiController
     {
-        private readonly IProfileService _profileService;
+        private readonly IUserDataService _userDataService;
 
-        public ProfileController(IProfileService profileService)
+        public ProfileController(IUserDataService userDataService)
         {
-            _profileService = profileService;
+            _userDataService = userDataService;
         }
 
         [HttpPost("update")]
         public async Task<ActionResult<UserProfileDto>> Sync()
         {
-            var userData = await _profileService.UpdateProfileDataAsync(CurrentUserId);
+            var userData = await _userDataService.UpdateProfileDataAsync(CurrentUserId);
 
             var response = new UserProfileDto(
                 userData.Id,
