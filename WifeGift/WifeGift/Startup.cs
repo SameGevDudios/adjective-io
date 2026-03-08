@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WifeGift.DataAccess.Repositories;
-using WifeGift.DataAccess.Contexts;
-using WifeGift.DataAccess.Models;
-using WifeGift.DataAccess.DbInitializiation;
+using Microsoft.Extensions.Options;
+using WifeGift.Core.Configuration.PreferenceSettings;
 using WifeGift.Core.Services.ProfileService;
+using WifeGift.DataAccess.Contexts;
+using WifeGift.DataAccess.DbInitializiation;
+using WifeGift.DataAccess.Models;
+using WifeGift.DataAccess.Repositories;
 
 namespace WifeGift.Startup
 {
@@ -22,12 +24,18 @@ namespace WifeGift.Startup
             services.AddControllers().AddMvcOptions(x =>
                 x.SuppressAsyncSuffixInActionNames = false);
 
+            services.Configure<PreferenceSettings>(Configuration.GetSection("PreferenceSettings"));
+
+            services.AddSingleton<IPreferenceSettings>(sp =>
+                sp.GetRequiredService<IOptions<PreferenceSettings>>().Value);
 
             services.AddScoped(typeof(IRepository<>), typeof(UserDataRepository<>));
 
             services.AddScoped<IProfileService, ProfileService>();
 
             services.AddScoped<IDbInitializer, EfDbInitializer>();
+
+            services.AddScoped<IPreferenceSettings, PreferenceSettings>();
 
             services.AddDbContext<UserDataContext>(options =>
             {

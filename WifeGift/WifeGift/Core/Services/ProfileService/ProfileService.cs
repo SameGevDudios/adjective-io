@@ -1,7 +1,8 @@
-﻿using WifeGift.DataAccess.Models;
+﻿using WifeGift.Core.Configuration.PreferenceSettings;
+using WifeGift.DataAccess.Models;
 using WifeGift.DataAccess.Repositories;
 
-namespace WifeGift.Services.ProfileService
+namespace WifeGift.Core.Services.ProfileService
 {
     public class ProfileService : IProfileService
     {
@@ -9,12 +10,15 @@ namespace WifeGift.Services.ProfileService
 
         private readonly IRepository<Preference> _preferenceRepository;
 
+        private readonly IPreferenceSettings _settings;
+
         private readonly Random _random;
 
-        public ProfileService(IRepository<UserData> userRepository, IRepository<Preference> preferenceRepository)
+        public ProfileService(IRepository<UserData> userRepository, IRepository<Preference> preferenceRepository, IPreferenceSettings settings)
         {
             _userRepository = userRepository;
             _preferenceRepository = preferenceRepository;
+            _settings = settings;
             _random = new Random();
         }
 
@@ -74,7 +78,7 @@ namespace WifeGift.Services.ProfileService
         public async Task<bool> IncreasePreferenceWeightAsync(string userId, Guid preferenceId)
         {
             var preference = await _preferenceRepository.GetByIdAsync(preferenceId);
-            double randomDelta = 0.2 + _random.NextDouble() * (0.35 - 0.2); // TODO: move min and max values to a configuration file
+            double randomDelta = _settings.MinDelta + _random.NextDouble() * (_settings.MaxDelta - _settings.MinDelta);
             double newWeight = preference.Weight + randomDelta;
 
             return await UpdatePreferenceWeightAsync(userId, preferenceId, newWeight);
@@ -83,7 +87,7 @@ namespace WifeGift.Services.ProfileService
         public async Task<bool> DecreasePreferenceWeightAsync(string userId, Guid preferenceId)
         {
             var preference = await _preferenceRepository.GetByIdAsync(preferenceId);
-            double randomDelta = 0.2 + _random.NextDouble() * (0.35 - 0.2); // TODO: move min and max values to a configuration file
+            double randomDelta = _settings.MinDelta + _random.NextDouble() * (_settings.MaxDelta - _settings.MinDelta);
             double newWeight = preference.Weight - randomDelta;
 
             return await UpdatePreferenceWeightAsync(userId, preferenceId, newWeight);
@@ -103,8 +107,8 @@ namespace WifeGift.Services.ProfileService
             // Buff or ban the entry
             if (Math.Abs(newWeight) > 1)
             {
-                double edgeValue = 1.5; // TODO: move min value to a configuration file
-                newWeight = Math.Clamp(newWeight *= 1.5, -edgeValue, edgeValue); // TODO: buff value to a configuration file
+                double edgeValue = _settings.WeightAbs;
+                newWeight = Math.Clamp(newWeight *= _settings.WeightMultiplier, -edgeValue, edgeValue);
             }
 
             pref.Weight = newWeight;

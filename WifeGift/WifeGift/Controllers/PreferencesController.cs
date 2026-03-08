@@ -12,10 +12,12 @@ namespace WifeGift.Controllers
     public class PreferencesController : BaseApiController
     {
         private readonly IProfileService _profileService;
+        private readonly IPreferenceSettings _settings;
 
-        public PreferencesController(IProfileService profileService)
+        public PreferencesController(IProfileService profileService, IPreferenceSettings settings)
         {
             _profileService = profileService;
+            _settings = settings;
         }
 
         [HttpGet]
@@ -23,12 +25,11 @@ namespace WifeGift.Controllers
         {
             var allPreferences = await _profileService.GetUserPreferencesAsync(CurrentUserId);
 
-            // Return only 70% of positive and 30% of negative adjectives
             var positivePreferences = allPreferences.Where(p => p.Weight >= 0).ToList();
             var negativePreferences = allPreferences.Where(p => p.Weight >= -1 && p.Weight < 0).ToList();
 
-            int positiveCount = (int)Math.Ceiling(positivePreferences.Count * 0.7);
-            int negativeCount = (int)Math.Ceiling(negativePreferences.Count * 0.3);
+            int positiveCount = (int)Math.Ceiling(positivePreferences.Count * _settings.PositivePercentage);
+            int negativeCount = (int)Math.Ceiling(negativePreferences.Count * _settings.NegativePercentage);
 
             var sampledPositive = positivePreferences.TakeRandom(positiveCount);
             var sampledNegative = negativePreferences.TakeRandom(negativeCount);
