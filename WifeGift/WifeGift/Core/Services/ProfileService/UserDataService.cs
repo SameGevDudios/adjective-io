@@ -41,7 +41,8 @@ namespace WifeGift.Core.Services.ProfileService
                     Id = Guid.NewGuid(),
                     UserId = userId,
                     LastLoginAt = DateTime.UtcNow,
-                    Preferences = new List<Preference>()
+                    Preferences = new List<Preference>(),
+                    Prefixes = new List<Prefix>()
                 };
                 await _userRepository.AddAsync(userData);
                 return userData;

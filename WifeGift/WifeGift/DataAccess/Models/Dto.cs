@@ -13,5 +13,8 @@
             string UserId,
             DateTime LastLoginAt,
             List<PreferenceReadDto> Preferences);
+
+        public record PrefixReadDto(Guid Id, string Title, string Subtitle);
+        public record PrefixCreateDto(string Title, string Subtitle);
     }
 }
