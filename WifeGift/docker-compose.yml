@@ -25,7 +25,7 @@ services:
     image: postgres:15
     container_name: wifegift-db-auth
     environment:
-      POSTGRES_PASSWORD: secret_auth_pass
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
       POSTGRES_DB: auth_db
     volumes:
       - auth_data:/var/lib/postgresql/data
@@ -39,7 +39,7 @@ services:
     image: postgres:15
     container_name: wifegift-db-data
     environment:
-      POSTGRES_PASSWORD: secret_data_pass
+      POSTGRES_PASSWORD: ${DATA_DB_PASSWORD}
       POSTGRES_DB: user_db
     volumes:
       - user_data:/var/lib/postgresql/data
