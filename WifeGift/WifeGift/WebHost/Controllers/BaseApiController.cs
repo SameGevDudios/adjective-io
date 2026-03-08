@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WifeGift.Controllers
+namespace WifeGift.WebHost.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
