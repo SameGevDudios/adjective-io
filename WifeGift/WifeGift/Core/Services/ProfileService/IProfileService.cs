@@ -1,6 +1,6 @@
 ﻿using WifeGift.DataAccess.Models;
 
-namespace WifeGift.Services.ProfileService
+namespace WifeGift.Core.Services.ProfileService
 {
     public interface IProfileService
     {

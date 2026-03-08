@@ -4,7 +4,7 @@ using WifeGift.DataAccess.Repositories;
 using WifeGift.DataAccess.Contexts;
 using WifeGift.DataAccess.Models;
 using WifeGift.DataAccess.DbInitializiation;
-using WifeGift.Services.ProfileService;
+using WifeGift.Core.Services.ProfileService;
 
 namespace WifeGift.Startup
 {

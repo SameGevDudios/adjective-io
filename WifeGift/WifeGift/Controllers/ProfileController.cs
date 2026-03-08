@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WifeGift.Services.ProfileService;
+using WifeGift.Core.Services.ProfileService;
 using static WifeGift.DataAccess.Models.Dto;
 
 namespace WifeGift.Controllers

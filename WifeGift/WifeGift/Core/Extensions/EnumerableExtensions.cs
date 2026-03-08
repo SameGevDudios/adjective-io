@@ -1,4 +1,4 @@
-﻿namespace WifeGift.Extensions
+﻿namespace WifeGift.Core.Extensions
 {
     public static class EnumerableExtensions
     {
