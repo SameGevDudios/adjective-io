@@ -17,6 +17,9 @@ services:
       - PreferenceSettings__MinDelta=${PREFERENCE_MIN_DELTA}
       - PreferenceSettings__MaxDelta=${PREFERENCE_MAX_DELTA}
       - PreferenceSettings__FadeRate=${PREFRENCE_FADE_RATE}
+      - PreferenceSettings__WeightAbs=${PREFERENCE_WEIGHT_ABS}
+      - PreferenceSettings__PositivePercentage=${PREFERENCE_POSITIVE_PERCENTAGE}
+      - PreferenceSettings__NegativePercentage=${PREFERENCE_NEGATIVE_PERCENTAGE}
 
   db-auth:
     image: postgres:15
