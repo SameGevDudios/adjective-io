@@ -1,5 +1,6 @@
 services:
   app:
+    image: samegevdudios/wifegift-api:v1
     build: .
     container_name: wifegift-api
     ports:
