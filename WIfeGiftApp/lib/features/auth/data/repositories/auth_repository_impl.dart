@@ -58,7 +58,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (e.response?.statusCode == 400) {
       final data = e.response?.data;
       return ValidationFailure(
-        message: data['title'] ?? 'Ошибка валидации',
+        message: data['title'] ?? 'Validation error',
         errors:
             (data['errors'] as Map<String, dynamic>?)?.map(
               (key, value) => MapEntry(key, List<String>.from(value)),
@@ -66,6 +66,6 @@ class AuthRepositoryImpl implements AuthRepository {
             {},
       );
     }
-    return ServerFailure(e.message ?? 'Произошла системная ошибка');
+    return ServerFailure(e.message ?? 'A system error occured');
   }
 }
