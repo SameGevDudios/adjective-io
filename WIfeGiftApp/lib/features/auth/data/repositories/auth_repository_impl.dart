@@ -9,7 +9,9 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource _remoteDataSource;
   final TokenStorage _tokenStorage;
 
-  AuthRepositoryImpl(this._remoteDataSource, this._tokenStorage);
+  AuthRepositoryImpl(AuthDataSource remoteDataSource, TokenStorage tokenStorage)
+    : _remoteDataSource = remoteDataSource,
+      _tokenStorage = tokenStorage;
 
   @override
   Future<void> login(String email, String password) async {
@@ -17,10 +19,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final response = await _remoteDataSource.login(
         LoginRequest(email: email, password: password),
       );
-      await _tokenStorage.saveTokens(
-        access: response.accessToken,
-        refresh: response.refreshToken,
-      );
+      await _tokenStorage.saveTokens(access: response.accessToken, refresh: response.refreshToken);
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -60,9 +59,11 @@ class AuthRepositoryImpl implements AuthRepository {
       final data = e.response?.data;
       return ValidationFailure(
         message: data['title'] ?? 'Ошибка валидации',
-        errors: (data['errors'] as Map<String, dynamic>?)?.map(
+        errors:
+            (data['errors'] as Map<String, dynamic>?)?.map(
               (key, value) => MapEntry(key, List<String>.from(value)),
-        ) ?? {},
+            ) ??
+            {},
       );
     }
     return ServerFailure(e.message ?? 'Произошла системная ошибка');
