@@ -28,6 +28,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
+  Future<void> _onRegisterRequested(
+    AuthEvent$RegisterRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthState$Loading());
+
+    try {
+      await _repository.register(event.request);
+
+      emit(AuthState$RegisterSuccess());
+    } on ValidationFailure catch (e) {
+      emit(AuthState$Error('${e.message}\nerrors: ${e.errors}'));
+    } catch (e) {
+      emit(AuthState$Error(e.toString()));
+    }
+  }
+
   Future<void> _onLoginRequested(AuthEvent$LoginRequested event, Emitter<AuthState> emit) async {
     emit(AuthState$Loading());
 
@@ -44,22 +61,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await _repository.logout();
 
     emit(AuthState$Success(isAuthenticated: false));
-  }
-
-  Future<void> _onRegisterRequested(
-    AuthEvent$RegisterRequested event,
-    Emitter<AuthState> emit,
-  ) async {
-    emit(AuthState$Loading());
-
-    try {
-      await _repository.register(event.request);
-
-      emit(AuthState$RegisterSuccess());
-    } on ValidationFailure catch (e) {
-      emit(AuthState$Error('${e.message}\nerrors: ${e.errors}'));
-    } catch (e) {
-      emit(AuthState$Error(e.toString()));
-    }
   }
 }
