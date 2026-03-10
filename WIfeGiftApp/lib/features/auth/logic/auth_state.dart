@@ -10,13 +10,13 @@ final class AuthState$Initial extends AuthState {}
 
 final class AuthState$Loading extends AuthState {}
 
-final class AuthState$Success extends AuthState {
+final class AuthState$LoginSuccess extends AuthState {
   final bool isAuthenticated;
 
   @override
   List<Object> get props => [isAuthenticated];
 
-  AuthState$Success({required this.isAuthenticated});
+  AuthState$LoginSuccess({required this.isAuthenticated});
 }
 
 final class AuthState$Error extends AuthState {

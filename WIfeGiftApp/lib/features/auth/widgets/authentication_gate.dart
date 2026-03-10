@@ -14,7 +14,7 @@ class AuthenticationGate extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is AuthState$Success) {
+          if (state is AuthState$LoginSuccess) {
             return state.isAuthenticated
                 ? const SizedBox.shrink() // return HomeScreen();
                 : const SizedBox.shrink(); // return AuthenticationScreen();
