@@ -12,7 +12,7 @@ abstract class AuthDataSource {
 class AuthDataSourceImpl implements AuthDataSource {
   final Dio _dio;
 
-  AuthDataSourceImpl(this._dio);
+  AuthDataSourceImpl(Dio dio) : _dio = dio;
 
   @override
   Future<void> register(RegisterRequest request) async {
