@@ -13,11 +13,17 @@ final class AuthState$Loading extends AuthState {}
 final class AuthState$Success extends AuthState {
   final bool isAuthenticated;
 
+  @override
+  List<Object> get props => [isAuthenticated];
+
   AuthState$Success({required this.isAuthenticated});
 }
 
 final class AuthState$Error extends AuthState {
   final String message;
+
+  @override
+  List<Object> get props => [message];
 
   AuthState$Error(this.message);
 }
