@@ -16,9 +16,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onStatusChecked(AuthEvent$StatusChecked event, Emitter<AuthState> emit) async {
-    final isAuth = await _repository.isAuthenticated();
+    try {
+      final isAuth = await _repository.isAuthenticated();
 
-    emit(isAuth ? AuthState$Auth() : AuthState$Unauth());
+      emit(AuthState$Success(isAuthenticated: isAuth));
+    }
+    catch (e) {
+      emit(AuthState$Error(e.toString()));
+    }
   }
 
   Future<void> _onLoginRequested(AuthEvent$LoginRequested event, Emitter<AuthState> emit) async {
@@ -27,7 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await _repository.login(event.email, event.password);
 
-      emit(AuthState$Auth());
+      emit(AuthState$Success(isAuthenticated: true));
     }
     catch (e) {
       emit(AuthState$Error(e.toString()));
@@ -37,6 +42,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogoutRequested(AuthEvent$LogoutRequested event, Emitter<AuthState> emit) async {
     await _repository.logout();
 
-    emit(AuthState$Unauth());
+    emit(AuthState$Success(isAuthenticated: false));
   }
 }

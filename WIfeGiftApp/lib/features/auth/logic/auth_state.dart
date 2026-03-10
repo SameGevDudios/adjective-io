@@ -10,9 +10,11 @@ final class AuthState$Initial extends AuthState {}
 
 final class AuthState$Loading extends AuthState {}
 
-final class AuthState$Auth extends AuthState {}
+final class AuthState$Success extends AuthState {
+  final bool isAuthenticated;
 
-final class AuthState$Unauth extends AuthState {}
+  AuthState$Success({required this.isAuthenticated});
+}
 
 final class AuthState$Error extends AuthState {
   final String message;

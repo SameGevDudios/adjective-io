@@ -14,14 +14,10 @@ class AuthenticationGate extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is AuthState$Auth) {
-            // return HomeScreen();
-            return const SizedBox.shrink();
-          }
-
-          if (state is AuthState$Unauth) {
-            // return AuthenticationScreen();
-            return const SizedBox.shrink();
+          if (state is AuthState$Success) {
+            return state.isAuthenticated
+                ? const SizedBox.shrink() // return HomeScreen();
+                : const SizedBox.shrink(); // return AuthenticationScreen();
           }
 
           // return ErrorModal();
