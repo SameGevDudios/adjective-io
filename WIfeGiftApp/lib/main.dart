@@ -5,7 +5,7 @@ import 'package:wife_gift/common/api/auth_interceptor.dart';
 import 'package:wife_gift/common/api/dio_client.dart';
 import 'package:wife_gift/common/config/env_config.dart';
 import 'package:wife_gift/common/storage/token_storage.dart';
-import 'package:wife_gift/features/auth/data/data_sources/auth_data_source.dart';
+import 'package:wife_gift/features/auth/data/data_sources/auth_data_source_impl.dart';
 import 'package:wife_gift/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:wife_gift/features/auth/logic/auth_bloc.dart';
 import 'package:wife_gift/features/auth/widgets/authentication_gate.dart';
