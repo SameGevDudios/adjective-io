@@ -10,6 +10,8 @@ final class AuthState$Initial extends AuthState {}
 
 final class AuthState$Loading extends AuthState {}
 
+final class AuthState$RegisterSuccess extends AuthState {}
+
 final class AuthState$LoginSuccess extends AuthState {
   final bool isAuthenticated;
 
@@ -27,5 +29,3 @@ final class AuthState$Error extends AuthState {
 
   AuthState$Error(this.message);
 }
-
-final class AuthState$RegisterSuccess extends AuthState {}
