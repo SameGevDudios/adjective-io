@@ -5,8 +5,9 @@ class AuthInterceptor extends Interceptor {
   final TokenStorage _tokenStorage;
   final Dio _refreshDio;
 
-  AuthInterceptor(this._tokenStorage, String baseUrl)
-    : _refreshDio = Dio(BaseOptions(baseUrl: baseUrl));
+  AuthInterceptor(TokenStorage tokenStorage, String baseUrl)
+    : _tokenStorage = tokenStorage,
+      _refreshDio = Dio(BaseOptions(baseUrl: baseUrl));
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
