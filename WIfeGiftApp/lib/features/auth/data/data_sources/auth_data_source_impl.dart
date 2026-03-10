@@ -18,7 +18,6 @@ class AuthDataSourceImpl implements AuthDataSource {
     final response = await _dio.post(
       ApiConstants.login,
       data: request.toJson(),
-      // Пример передачи query параметров из Swagger
       queryParameters: {'useCookies': false},
     );
     return AccessTokenResponse.fromJson(response.data);
