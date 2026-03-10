@@ -24,10 +24,7 @@ class RegisterScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          return const SingleChildScrollView(
-            padding: EdgeInsets.all(8),
-            child: RegisterForm(),
-          );
+          return const SingleChildScrollView(padding: EdgeInsets.all(16), child: RegisterForm());
         },
       ),
     );

@@ -28,10 +28,12 @@ class _RegisterFormState extends State<RegisterForm> {
   void _onRegisterPressed() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(
-        AuthEvent$RegisterRequested(request: RegisterRequest(
-          email: _emailController.text,
-          password: _passwordController.text,
-        ),),
+        AuthEvent$RegisterRequested(
+          request: RegisterRequest(
+            email: _emailController.text,
+            password: _passwordController.text,
+          ),
+        ),
       );
     }
   }
@@ -72,10 +74,8 @@ class _RegisterFormState extends State<RegisterForm> {
               border: OutlineInputBorder(),
             ),
             obscureText: true,
-            validator: (value) => AppValidators.validateConfirmPassword(
-              value,
-              _passwordController.text,
-            ),
+            validator: (value) =>
+                AppValidators.validateConfirmPassword(value, _passwordController.text),
           ),
           const SizedBox(height: 32),
           SizedBox(

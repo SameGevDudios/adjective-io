@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/features/auth/logic/auth_bloc.dart';
+import 'package:wife_gift/features/auth/widgets/login/login_screen.dart';
 
 class AuthenticationGate extends StatelessWidget {
   const AuthenticationGate({super.key});
@@ -16,12 +17,17 @@ class AuthenticationGate extends StatelessWidget {
 
           if (state is AuthState$LoginSuccess) {
             return state.isAuthenticated
-                ? const SizedBox.shrink() // return HomeScreen();
-                : const SizedBox.shrink(); // return AuthenticationScreen();
+                ? Center(child: const Text('authenticated.'))
+                : const LoginScreen();
           }
 
-          // return ErrorModal();
-          return const SizedBox.shrink();
+          if (state is AuthState$Error) {
+            return Center(
+              child: Text(state.message, style: TextStyle(color: Colors.red)),
+            );
+          }
+
+          return const LoginScreen();
         },
       ),
     );

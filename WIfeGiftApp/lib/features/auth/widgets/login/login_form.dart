@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/common/utils/app_validators.dart';
+import 'package:wife_gift/common/widgets/buttons/link_label.dart';
 import 'package:wife_gift/features/auth/data/models/auth_dtos.dart';
 import 'package:wife_gift/features/auth/logic/auth_bloc.dart';
+import 'package:wife_gift/features/auth/widgets/register/register_screen.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -39,6 +41,7 @@ class _LoginFormState extends State<LoginForm> {
       key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
             controller: _emailController,
@@ -60,6 +63,13 @@ class _LoginFormState extends State<LoginForm> {
             ),
             obscureText: true,
             validator: AppValidators.validatePassword,
+          ),
+          const SizedBox(height: 4),
+          LinkLabel(
+            message: 'Нет аккаунта',
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const RegisterScreen()));
+            },
           ),
           const SizedBox(height: 24),
           SizedBox(
