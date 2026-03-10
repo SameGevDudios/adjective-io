@@ -12,6 +12,6 @@ final class UiColors {
   static const Color negativeAdjective = Color(0xFFFF1800);
   static const Color textPrimary = Color(0xFFAD66D5);
   static const Color textSecondary = Color(0xFF727272);
-  static const Color textLight = Color(0xFFEFCCE0);
+  static const Color textLight = Color(0xFFFCE3EF);
   static const Color textDark = Color(0xFF484848);
 }
