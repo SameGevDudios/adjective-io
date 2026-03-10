@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wife_gift/common/exceptions/failure.dart';
-import 'package:wife_gift/features/auth/data/models/requests/register_request.dart';
+import 'package:wife_gift/features/auth/data/models/auth_dtos.dart';
 import 'package:wife_gift/features/auth/data/repositories/auth_repository.dart';
 
 part 'auth_event.dart';
@@ -32,7 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthState$Loading());
 
     try {
-      await _repository.login(event.email, event.password);
+      await _repository.login(event.request);
 
       emit(AuthState$Success(isAuthenticated: true));
     } catch (e) {

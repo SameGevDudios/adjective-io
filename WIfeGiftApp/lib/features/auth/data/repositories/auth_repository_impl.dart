@@ -14,10 +14,10 @@ class AuthRepositoryImpl implements AuthRepository {
       _tokenStorage = tokenStorage;
 
   @override
-  Future<void> login(String email, String password) async {
+  Future<void> login(LoginRequest request) async {
     try {
       final response = await _remoteDataSource.login(
-        LoginRequest(email: email, password: password),
+        request,
       );
       await _tokenStorage.saveTokens(access: response.accessToken, refresh: response.refreshToken);
     } on DioException catch (e) {
