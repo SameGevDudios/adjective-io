@@ -26,9 +26,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> register(String email, String password) async {
+  Future<void> register(RegisterRequest request) async {
     try {
-      await _remoteDataSource.register(RegisterRequest(email: email, password: password));
+      await _remoteDataSource.register(request);
     } on DioException catch (e) {
       throw _handleError(e);
     }
