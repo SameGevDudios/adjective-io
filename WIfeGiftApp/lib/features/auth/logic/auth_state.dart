@@ -21,3 +21,5 @@ final class AuthState$Error extends AuthState {
 
   AuthState$Error(this.message);
 }
+
+final class AuthState$RegisterSuccess extends AuthState {}
