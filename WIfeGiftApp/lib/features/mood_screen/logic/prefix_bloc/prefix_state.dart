@@ -17,13 +17,8 @@ final class PrefixState$Success extends PrefixState {
 
   PrefixState$Success({required this.prefix});
 
-  PrefixState$Success copyWith({
-    Prefix? prefix,
-  }) {
-    return PrefixState$Success(
-      prefix: prefix ?? this.prefix,
-    );
-  }
+  PrefixState$Success copyWith({Prefix? prefix}) =>
+      PrefixState$Success(prefix: prefix ?? this.prefix);
 }
 
 final class PrefixState$Error extends PrefixState {
