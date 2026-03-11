@@ -51,10 +51,12 @@ void main() {
               preferenceRepository: preferenceRepository,
               prefixRepository: prefixRepository,
               assetLoader: assetLoader,
+              dio: dioClient.dio,
             )..add(AuthEvent$StatusChecked()),
           ),
           BlocProvider(
-            create: (context) => PreferenceBloc(preferenceRepository)..add(PreferenceEvent$PreferencesRequested()),
+            create: (context) =>
+                PreferenceBloc(preferenceRepository)..add(PreferenceEvent$PreferencesRequested()),
           ),
           BlocProvider(
             create: (context) => PrefixBloc(prefixRepository)..add(PrefixEvent$PrefixesRequested()),
