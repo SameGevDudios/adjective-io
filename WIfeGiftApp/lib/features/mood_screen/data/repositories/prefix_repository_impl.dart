@@ -8,7 +8,7 @@ import 'prefix_repository.dart';
 class PrefixRepositoryImpl implements PrefixRepository {
   final PrefixDataSource _dataSource;
 
-  PrefixRepositoryImpl(this._dataSource);
+  PrefixRepositoryImpl(PrefixDataSource dataSource) : _dataSource = dataSource;
 
   @override
   Future<List<Prefix>> getAllPrefixes() async {
