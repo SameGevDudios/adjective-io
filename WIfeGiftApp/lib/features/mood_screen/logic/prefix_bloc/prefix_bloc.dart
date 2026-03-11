@@ -37,12 +37,16 @@ class PrefixBloc extends Bloc<PrefixEvent, PrefixState> {
     PrefixEvent$PrefixAddRequested event,
     Emitter<PrefixState> emit,
   ) async {
+    if (state is! PrefixState$Success) {
+      return;
+    }
+
     emit(PrefixState$Loading());
 
     try {
       await _repository.addPrefixes(event.prefixes);
 
-      emit(state is PrefixState$Success ? state : PrefixState$Success(prefix: Prefix.empty()));
+      emit(state);
     } catch (e) {
       emit(PrefixState$Error(e.toString()));
     }
