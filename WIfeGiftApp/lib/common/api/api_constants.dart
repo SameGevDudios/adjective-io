@@ -15,6 +15,6 @@ class ApiConstants {
   static String incrementPreference(String id) => '/api/v1/preferences/$id/increment';
   static String decrementPreference(String id) => '/api/v1/preferences/$id/decrement';
 
-  static const String prefix = '/api/Prefix';
+  static const String prefix = '/api/v1/prefixes';
   static const String profileSync = '/api/v1/profile/update';
 }
