@@ -1,16 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WifeGift.DataAccess.Models;
 using WifeGift.DataAccess.Repositories;
 using static WifeGift.DataAccess.Models.Dto;
 
 namespace WifeGift.WebHost.Controllers
 {
-    public class PrefixController : BaseApiController
+    [Authorize]
+    [Route("api/v1/prefixes")]
+    public class PrefixesController : BaseApiController
     {
         private readonly IRepository<UserData> _userRepository;
         private readonly IRepository<Prefix> _prefixRepository;
 
-        public PrefixController(IRepository<UserData> userRepository, IRepository<Prefix> prefixRepository)
+        public PrefixesController(IRepository<UserData> userRepository, IRepository<Prefix> prefixRepository)
         {
             _userRepository = userRepository;
             _prefixRepository = prefixRepository;
