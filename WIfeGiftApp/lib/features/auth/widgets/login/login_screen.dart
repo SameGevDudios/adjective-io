@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/features/auth/logic/auth_bloc.dart';
-import 'package:wife_gift/features/auth/widgets/register/register_screen.dart';
 
 import 'login_form.dart';
 
