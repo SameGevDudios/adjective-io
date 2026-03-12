@@ -5,6 +5,8 @@ sealed class PreferenceEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+final class PreferenceEvent$AllPreferencesRequested extends PreferenceEvent {}
+
 final class PreferenceEvent$PreferencesRequested extends PreferenceEvent {}
 
 final class PreferenceEvent$AddRequested extends PreferenceEvent {
@@ -12,4 +14,3 @@ final class PreferenceEvent$AddRequested extends PreferenceEvent {
 
   PreferenceEvent$AddRequested({required this.preferences});
 }
-

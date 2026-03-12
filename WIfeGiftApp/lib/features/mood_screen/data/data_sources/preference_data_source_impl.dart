@@ -10,6 +10,15 @@ class PreferenceDataSourceImpl extends PreferenceDataSource {
 
   @override
   Future<List<Preference>> getAll() async {
+    final response = await _dio.get(ApiConstants.preferencesAll);
+
+    return (response.data as List)
+        .map((json) => Preference.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<List<Preference>> getSampled() async {
     final response = await _dio.get(ApiConstants.preferences);
     return (response.data as List)
         .map((json) => Preference.fromJson(json as Map<String, dynamic>))
@@ -24,11 +33,11 @@ class PreferenceDataSourceImpl extends PreferenceDataSource {
 
   @override
   Future<void> increment(String id) async {
-    await _dio.patch('${ApiConstants.preferences}/$id/increment');
+    await _dio.patch(ApiConstants.incrementPreference(id));
   }
 
   @override
   Future<void> decrement(String id) async {
-    await _dio.patch('${ApiConstants.preferences}/$id/decrement');
+    await _dio.patch(ApiConstants.decrementPreference(id));
   }
 }

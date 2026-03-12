@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/common/ui_colors.dart';
-import 'package:wife_gift/features/mood_screen/data/models/Adjective.dart';
+import 'package:wife_gift/features/mood_screen/data/models/adjective.dart';
 import 'package:wife_gift/features/mood_screen/data/models/prefix.dart';
 import 'package:wife_gift/features/mood_screen/logic/preference_bloc/preference_bloc.dart';
 import 'package:wife_gift/features/mood_screen/logic/prefix_bloc/prefix_bloc.dart';
-import 'package:wife_gift/features/mood_screen/widgets/adjective_tile.dart';
-import 'package:wife_gift/features/mood_screen/widgets/prefix_widget.dart';
+import 'adjective_tile.dart';
+import 'prefix_widget.dart';
 
 class MoodScreen extends StatelessWidget {
   const MoodScreen({super.key});
@@ -22,67 +22,47 @@ class MoodScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: UiColors.background,
-      body: RefreshIndicator(
-        color: UiColors.accent,
-        backgroundColor: Colors.white,
-        onRefresh: () => _onRefresh(context),
-        child: CustomScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Stack(
-                children: [
-                  BlocBuilder<PrefixBloc, PrefixState>(
+    return RefreshIndicator(
+      color: UiColors.accent,
+      backgroundColor: Colors.white,
+      onRefresh: () => _onRefresh(context),
+      child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Stack(
+              children: [
+                BlocBuilder<PrefixBloc, PrefixState>(
+                  builder: (context, state) {
+                    if (state is PrefixState$Success) {
+                      return PrefixWidget(prefix: state.prefix, size: size);
+                    }
+
+                    if(state is PrefixState$Error) {
+                      return PrefixWidget(prefix: Prefix.empty(), size: size);
+                    }
+
+                    return PrefixWidget(prefix: Prefix(title: '', subtitle: ''), size: size);
+                  },
+                ),
+                Positioned(
+                  top: size.height * 0.35,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: BlocBuilder<PreferenceBloc, PreferenceState>(
                     builder: (context, state) {
-                      final prefix = state is PrefixState$Success ? state.prefix : Prefix.empty();
-                      return PrefixWidget(prefix: prefix, size: size);
+                      if (state is PreferenceState$Success) {
+                        return _AdjectiveStaticList(adjectives: state.adjectives);
+                      }
+                      return const Center(child: CircularProgressIndicator(color: Colors.white));
                     },
                   ),
-                  Positioned(
-                    top: size.height * 0.35,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: BlocBuilder<PreferenceBloc, PreferenceState>(
-                      builder: (context, state) {
-                        if (state is PreferenceState$Success) {
-                          return _AdjectiveStaticList(adjectives: state.adjectives);
-                        }
-                        return const Center(
-                          child: CircularProgressIndicator(color: Colors.white),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: _BuildBottomNavBar(),
-    );
-  }
-
-}
-
-class _BuildBottomNavBar extends StatelessWidget {
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      decoration: const BoxDecoration(color: UiColors.accentDark),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Icon(Icons.home, color: Colors.white, size: 34),
-          Icon(Icons.format_list_bulleted, color: Colors.white54, size: 34),
-          Icon(Icons.settings_outlined, color: Colors.white54, size: 34),
+          ),
         ],
       ),
     );

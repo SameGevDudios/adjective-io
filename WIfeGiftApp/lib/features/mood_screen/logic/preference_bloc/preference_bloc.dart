@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wife_gift/common/ui_colors.dart';
-import 'package:wife_gift/features/mood_screen/data/models/Adjective.dart';
+import 'package:wife_gift/features/mood_screen/data/models/adjective.dart';
 import 'package:wife_gift/features/mood_screen/data/models/preference.dart';
 import 'package:wife_gift/features/mood_screen/data/repositories/preference_repository.dart';
 
@@ -14,8 +13,22 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
   PreferenceBloc(PreferenceRepository repository)
     : _repository = repository,
       super(PreferenceState$Initial()) {
+    on<PreferenceEvent$AllPreferencesRequested>(_onAllPreferencesRequested);
     on<PreferenceEvent$PreferencesRequested>(_onPreferencesRequested);
     on<PreferenceEvent$AddRequested>(_onPreferenceAddRequested);
+  }
+
+  Future<void> _onAllPreferencesRequested(PreferenceEvent$AllPreferencesRequested event, Emitter<PreferenceState> emit) async {
+    emit(PreferenceState$Loading());
+
+    try {
+      final preferences = await _repository.getAll();
+      final adjectives = preferences.map((preference) => Adjective.fromPreference(preference)).toList();
+
+      emit(PreferenceState$Success(adjectives: adjectives));
+    } catch (e) {
+      emit(PreferenceState$Error(e.toString()));
+    }
   }
 
   Future<void> _onPreferencesRequested(
@@ -25,7 +38,7 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
     emit(PreferenceState$Loading());
 
     try {
-      final preferences = await _repository.getAllPreferences();
+      final preferences = await _repository.getSampledPreferences();
 
       final adjectives = preferences.map(Adjective.fromPreference).toList();
 
