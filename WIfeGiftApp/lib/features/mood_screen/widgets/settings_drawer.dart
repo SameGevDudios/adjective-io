@@ -47,17 +47,20 @@ class SettingsDrawer extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              InkWell(
-                onTap: () {
-                  context.read<AuthBloc>().add(AuthEvent$LogoutRequested());
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(Icons.logout, size: 28),
-                    SizedBox(width: 10),
-                    Text('Выйти', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  ],
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: () {
+                    context.read<AuthBloc>().add(AuthEvent$LogoutRequested());
+                  },
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.logout, size: 28),
+                      SizedBox(width: 10),
+                      Text('Выйти', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
                 ),
               ),
             ],
