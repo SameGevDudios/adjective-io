@@ -9,6 +9,8 @@ import 'adjective_tile.dart';
 import 'prefix_widget.dart';
 
 class MoodScreen extends StatelessWidget {
+  static final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   const MoodScreen({super.key});
 
   Future<void> _onRefresh(BuildContext context) async {
@@ -61,25 +63,49 @@ class MoodScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: _BuildBottomNavBar(),
+      bottomNavigationBar: _BottomNavBar(scaffoldKey: _scaffoldKey),
     );
   }
 }
 
-class _BuildBottomNavBar extends StatelessWidget {
+class _BottomNavBar extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const _BottomNavBar({required this.scaffoldKey, super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 80,
       decoration: const BoxDecoration(color: UiColors.accentDark),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(Icons.home, color: Colors.white, size: 34),
-          Icon(Icons.format_list_bulleted, color: Colors.white54, size: 34),
-          Icon(Icons.settings_outlined, color: Colors.white54, size: 34),
+          _NavBarItem(icon: Icons.home, isSelected: true, onTap: () {}),
+          _NavBarItem(icon: Icons.format_list_bulleted_outlined, isSelected: false),
+          _NavBarItem(
+            icon: Icons.settings_outlined,
+            isSelected: true,
+            onTap: () => scaffoldKey.currentState?.openEndDrawer(),
+          ),
         ],
       ),
+    );
+  }
+}
+
+class _NavBarItem extends StatelessWidget {
+  final IconData icon;
+  final bool isSelected;
+  final VoidCallback? onTap;
+
+  const _NavBarItem({required this.icon, required this.isSelected, this.onTap, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(icon, color: UiColors.white.withAlpha(isSelected ? 255 : 128), size: 32),
+      onPressed: onTap,
     );
   }
 }
