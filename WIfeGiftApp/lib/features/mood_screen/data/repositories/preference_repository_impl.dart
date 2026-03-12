@@ -10,6 +10,15 @@ class PreferenceRepositoryImpl extends PreferenceRepository {
   PreferenceRepositoryImpl(PreferenceDataSource dataSource) : _dataSource = dataSource;
 
   @override
+  Future<List<Preference>> getAll() async {
+    try {
+      return await _dataSource.getAll();
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  @override
   Future<List<Preference>> getSampledPreferences() async {
     try {
       return await _dataSource.getSampled();
@@ -46,7 +55,8 @@ class PreferenceRepositoryImpl extends PreferenceRepository {
   }
 
   Failure _handleError(DioException e) {
-    if (e.type == DioExceptionType.connectionError || e.type == DioExceptionType.connectionTimeout) {
+    if (e.type == DioExceptionType.connectionError ||
+        e.type == DioExceptionType.connectionTimeout) {
       return NetworkFailure('No server connection');
     }
     return ServerFailure(e.message ?? 'Server error occurred');
