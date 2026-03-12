@@ -20,7 +20,7 @@ class ThoughtsScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async =>
-            context.read<PreferenceBloc>().add(PreferenceEvent$PreferencesRequested()),
+            context.read<PreferenceBloc>().add(PreferenceEvent$AllPreferencesRequested()),
         child: BlocBuilder<PreferenceBloc, PreferenceState>(
           builder: (context, state) {
             if (state is PreferenceState$Initial) {

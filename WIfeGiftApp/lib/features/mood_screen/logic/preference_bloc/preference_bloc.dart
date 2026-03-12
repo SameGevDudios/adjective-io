@@ -13,8 +13,22 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
   PreferenceBloc(PreferenceRepository repository)
     : _repository = repository,
       super(PreferenceState$Initial()) {
+    on<PreferenceEvent$AllPreferencesRequested>(_onAllPreferencesRequested);
     on<PreferenceEvent$PreferencesRequested>(_onPreferencesRequested);
     on<PreferenceEvent$AddRequested>(_onPreferenceAddRequested);
+  }
+
+  Future<void> _onAllPreferencesRequested(PreferenceEvent$AllPreferencesRequested event, Emitter<PreferenceState> emit) async {
+    emit(PreferenceState$Loading());
+
+    try {
+      final preferences = await _repository.getAll();
+      final adjectives = preferences.map((preference) => Adjective.fromPreference(preference)).toList();
+
+      emit(PreferenceState$Success(adjectives: adjectives));
+    } catch (e) {
+      emit(PreferenceState$Error(e.toString()));
+    }
   }
 
   Future<void> _onPreferencesRequested(
