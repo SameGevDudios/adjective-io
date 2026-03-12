@@ -7,6 +7,7 @@ import 'package:wife_gift/features/mood_screen/logic/preference_bloc/preference_
 import 'package:wife_gift/features/mood_screen/logic/prefix_bloc/prefix_bloc.dart';
 import 'adjective_tile.dart';
 import 'prefix_widget.dart';
+import 'settings_drawer.dart';
 
 class MoodScreen extends StatelessWidget {
   static final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -25,7 +26,9 @@ class MoodScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: UiColors.background,
+      endDrawer: const SettingsDrawer(),
       body: RefreshIndicator(
         color: UiColors.accent,
         backgroundColor: Colors.white,
