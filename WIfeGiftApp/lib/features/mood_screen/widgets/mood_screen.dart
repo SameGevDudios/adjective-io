@@ -7,11 +7,8 @@ import 'package:wife_gift/features/mood_screen/logic/preference_bloc/preference_
 import 'package:wife_gift/features/mood_screen/logic/prefix_bloc/prefix_bloc.dart';
 import 'adjective_tile.dart';
 import 'prefix_widget.dart';
-import 'settings_drawer.dart';
 
 class MoodScreen extends StatelessWidget {
-  static final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   const MoodScreen({super.key});
 
   Future<void> _onRefresh(BuildContext context) async {
@@ -25,90 +22,42 @@ class MoodScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: UiColors.background,
-      endDrawer: const SettingsDrawer(),
-      body: RefreshIndicator(
-        color: UiColors.accent,
-        backgroundColor: Colors.white,
-        onRefresh: () => _onRefresh(context),
-        child: CustomScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Stack(
-                children: [
-                  BlocBuilder<PrefixBloc, PrefixState>(
+    return RefreshIndicator(
+      color: UiColors.accent,
+      backgroundColor: Colors.white,
+      onRefresh: () => _onRefresh(context),
+      child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Stack(
+              children: [
+                BlocBuilder<PrefixBloc, PrefixState>(
+                  builder: (context, state) {
+                    final prefix = state is PrefixState$Success ? state.prefix : Prefix.empty();
+                    return PrefixWidget(prefix: prefix, size: size);
+                  },
+                ),
+                Positioned(
+                  top: size.height * 0.35,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: BlocBuilder<PreferenceBloc, PreferenceState>(
                     builder: (context, state) {
-                      final prefix = state is PrefixState$Success ? state.prefix : Prefix.empty();
-                      return PrefixWidget(prefix: prefix, size: size);
+                      if (state is PreferenceState$Success) {
+                        return _AdjectiveStaticList(adjectives: state.adjectives);
+                      }
+                      return const Center(child: CircularProgressIndicator(color: Colors.white));
                     },
                   ),
-                  Positioned(
-                    top: size.height * 0.35,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: BlocBuilder<PreferenceBloc, PreferenceState>(
-                      builder: (context, state) {
-                        if (state is PreferenceState$Success) {
-                          return _AdjectiveStaticList(adjectives: state.adjectives);
-                        }
-                        return const Center(child: CircularProgressIndicator(color: Colors.white));
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: _BottomNavBar(scaffoldKey: _scaffoldKey),
-    );
-  }
-}
-
-class _BottomNavBar extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
-
-  const _BottomNavBar({required this.scaffoldKey, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      decoration: const BoxDecoration(color: UiColors.accentDark),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _NavBarItem(icon: Icons.home, isSelected: true, onTap: () {}),
-          _NavBarItem(icon: Icons.format_list_bulleted_outlined, isSelected: false),
-          _NavBarItem(
-            icon: Icons.settings_outlined,
-            isSelected: true,
-            onTap: () => scaffoldKey.currentState?.openEndDrawer(),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _NavBarItem extends StatelessWidget {
-  final IconData icon;
-  final bool isSelected;
-  final VoidCallback? onTap;
-
-  const _NavBarItem({required this.icon, required this.isSelected, this.onTap, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(icon, color: UiColors.white.withAlpha(isSelected ? 255 : 128), size: 32),
-      onPressed: onTap,
     );
   }
 }
