@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wife_gift/common/ui_colors.dart';
 import 'package:wife_gift/features/mood_screen/widgets/mood_screen.dart';
 import 'package:wife_gift/features/mood_screen/widgets/settings_drawer.dart';
+import 'package:wife_gift/features/thoughts_screen/widgets/thoughts_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -16,9 +17,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   final List<Widget> _pages = [
     const MoodScreen(),
-    const Center(
-      child: Text("Вторая страница (Список)", style: TextStyle(color: Colors.white)),
-    ),
+    const ThoughtsScreen(),
   ];
 
   void _onItemTapped(int index) {
