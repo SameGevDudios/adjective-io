@@ -14,4 +14,6 @@ final class UiColors {
   static const Color textSecondary = Color(0xFF727272);
   static const Color textLight = Color(0xFFFCE3EF);
   static const Color textDark = Color(0xFF484848);
+  static const Color green = Color(0xFF66BB6A);
+  static const Color red = Color(0xFFFF7043);
 }
