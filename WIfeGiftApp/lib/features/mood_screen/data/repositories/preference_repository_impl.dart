@@ -12,9 +12,7 @@ class PreferenceRepositoryImpl extends PreferenceRepository {
   @override
   Future<List<Preference>> getAllPreferences() async {
     try {
-      final preferences = await _dataSource.getAll();
-
-      return preferences;
+      return await _dataSource.getAll();
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -29,19 +27,28 @@ class PreferenceRepositoryImpl extends PreferenceRepository {
     }
   }
 
+  @override
+  Future<void> incrementWeight(String id) async {
+    try {
+      await _dataSource.increment(id);
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  @override
+  Future<void> decrementWeight(String id) async {
+    try {
+      await _dataSource.decrement(id);
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   Failure _handleError(DioException e) {
-    if (e.type == DioExceptionType.connectionError ||
-        e.type == DioExceptionType.connectionTimeout) {
+    if (e.type == DioExceptionType.connectionError || e.type == DioExceptionType.connectionTimeout) {
       return NetworkFailure('No server connection');
     }
-
-    if (e.response?.statusCode == 400) {
-      return ValidationFailure(
-        message: e.response?.data['title'] ?? 'Validation error',
-        errors: {},
-      );
-    }
-
     return ServerFailure(e.message ?? 'Server error occurred');
   }
 }
