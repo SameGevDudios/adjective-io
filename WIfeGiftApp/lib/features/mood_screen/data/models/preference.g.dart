@@ -7,7 +7,7 @@ part of 'preference.dart';
 // **************************************************************************
 
 Preference _$PreferenceFromJson(Map<String, dynamic> json) => Preference(
-  id: json['id'] as String,
+  id: json['id'] as String?,
   adjective: json['adjective'] as String,
   weight: (json['weight'] as num).toDouble(),
 );
