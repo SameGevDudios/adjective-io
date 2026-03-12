@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/common/ui_colors.dart';
+import 'package:wife_gift/features/mood_screen/data/models/Adjective.dart';
 import 'package:wife_gift/features/mood_screen/data/models/prefix.dart';
 import 'package:wife_gift/features/mood_screen/logic/preference_bloc/preference_bloc.dart';
 import 'package:wife_gift/features/mood_screen/logic/prefix_bloc/prefix_bloc.dart';
@@ -24,26 +25,14 @@ class MoodScreen extends StatelessWidget {
               return PrefixWidget(prefix: prefix, size: size);
             },
           ),
-
           Positioned.fill(
             top: size.height * 0.35,
             child: BlocBuilder<PreferenceBloc, PreferenceState>(
               builder: (context, state) {
                 if (state is PreferenceState$Success) {
-                  return ListView.builder(
-                    padding: const EdgeInsets.only(bottom: 100, top: 20),
-                    itemCount: state.adjectives.length,
-                    itemBuilder: (context, index) {
-                      return AdjectiveTile(adjective: state.adjectives[index]);
-                    },
-                  );
+                  return _AdjectiveListView(adjectives: state.adjectives);
                 }
-
-                if (state is PreferenceState$Loading) {
-                  return const Center(child: CircularProgressIndicator(color: UiColors.white));
-                }
-
-                return const SizedBox.shrink();
+                return const Center(child: CircularProgressIndicator(color: Colors.white));
               },
             ),
           ),
@@ -82,6 +71,42 @@ class MoodScreen extends StatelessWidget {
       ),
       onPressed: () {
         // TODO: add page logic
+      },
+    );
+  }
+}
+class _AdjectiveListView extends StatefulWidget {
+  final List<Adjective> adjectives;
+  const _AdjectiveListView({required this.adjectives});
+
+  @override
+  State<_AdjectiveListView> createState() => _AdjectiveListViewState();
+}
+
+class _AdjectiveListViewState extends State<_AdjectiveListView> {
+  late List<Adjective> _items;
+
+  @override
+  void initState() {
+    super.initState();
+    _items = List.from(widget.adjectives);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.only(bottom: 100),
+      itemCount: _items.length,
+      itemBuilder: (context, index) {
+        return AdjectiveTile(
+          key: ValueKey(_items[index].id),
+          adjective: _items[index],
+          onDismissed: (_) {
+            setState(() {
+              _items.removeAt(index);
+            });
+          },
+        );
       },
     );
   }
