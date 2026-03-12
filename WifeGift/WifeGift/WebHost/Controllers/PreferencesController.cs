@@ -41,6 +41,19 @@ namespace WifeGift.WebHost.Controllers
             return Ok(response);
         }
 
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<PreferenceReadDto>>> GetAll()
+        {
+            var preferences = await _userDataService.GetUserPreferencesAsync(CurrentUserId);
+
+            var response = preferences.OrderBy(p => p.Weight)
+                .Reverse()
+                .Select(p => new PreferenceReadDto(p.Id, p.Adjective, p.Weight))
+                .ToList();
+
+            return response;
+        }
+
         [HttpPost()]
         public async Task<IActionResult> AddRange([FromBody] List<PreferenceCreateDto> dtos)
         {
