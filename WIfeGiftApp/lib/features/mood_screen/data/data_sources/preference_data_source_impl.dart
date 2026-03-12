@@ -33,11 +33,11 @@ class PreferenceDataSourceImpl extends PreferenceDataSource {
 
   @override
   Future<void> increment(String id) async {
-    await _dio.patch('${ApiConstants.preferences}/$id/increment');
+    await _dio.patch(ApiConstants.incrementPreference(id));
   }
 
   @override
   Future<void> decrement(String id) async {
-    await _dio.patch('${ApiConstants.preferences}/$id/decrement');
+    await _dio.patch(ApiConstants.decrementPreference(id));
   }
 }
