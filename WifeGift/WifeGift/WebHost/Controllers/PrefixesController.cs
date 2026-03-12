@@ -1,16 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WifeGift.DataAccess.Models;
 using WifeGift.DataAccess.Repositories;
 using static WifeGift.DataAccess.Models.Dto;
 
 namespace WifeGift.WebHost.Controllers
 {
-    public class PrefixController : BaseApiController
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
+    [Authorize]
+    [Route("api/v1/prefixes")]
+    public class PrefixesController : BaseApiController
     {
         private readonly IRepository<UserData> _userRepository;
         private readonly IRepository<Prefix> _prefixRepository;
 
-        public PrefixController(IRepository<UserData> userRepository, IRepository<Prefix> prefixRepository)
+        public PrefixesController(IRepository<UserData> userRepository, IRepository<Prefix> prefixRepository)
         {
             _userRepository = userRepository;
             _prefixRepository = prefixRepository;
@@ -34,20 +41,38 @@ namespace WifeGift.WebHost.Controllers
         {
             var userData = await _userRepository.GetByConditionAsync(u => u.UserId == CurrentUserId);
 
+<<<<<<< Updated upstream
             if(userData == null) return NotFound("User not found.");
 
+=======
+            if (userData == null) return NotFound("User not found.");
+
+>>>>>>> Stashed changes
             var prefixes = prefixDtos.Select(p => new Prefix
             {
                 Id = Guid.NewGuid(),
                 UserDataId = userData.Id,
+<<<<<<< Updated upstream
                 UserData = userData,
+=======
+>>>>>>> Stashed changes
                 Title = p.Title,
                 Subtitle = p.Subtitle
             }).ToList();
 
             await _prefixRepository.AddRangeAsync(prefixes);
 
+<<<<<<< Updated upstream
             return Ok(prefixes);
+=======
+            var response = prefixes.Select(p => new PrefixReadDto(
+                p.Id,
+                p.Title,
+                p.Subtitle
+            )).ToList();
+
+            return Ok(response);
+>>>>>>> Stashed changes
         }
     }
 }
