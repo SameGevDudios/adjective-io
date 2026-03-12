@@ -21,6 +21,14 @@ namespace WifeGift.Startup
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers()
+               .AddJsonOptions(options =>
+               {
+                   options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+                   options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+                   options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+               });
+
             services.AddControllers().AddMvcOptions(x =>
                 x.SuppressAsyncSuffixInActionNames = false);
 
@@ -34,8 +42,6 @@ namespace WifeGift.Startup
             services.AddScoped<IUserDataService, UserDataService>();
 
             services.AddScoped<IDbInitializer, EfDbInitializer>();
-
-            services.AddScoped<IPreferenceSettings, PreferenceSettings>();
 
             services.AddDbContext<UserDataContext>(options =>
             {

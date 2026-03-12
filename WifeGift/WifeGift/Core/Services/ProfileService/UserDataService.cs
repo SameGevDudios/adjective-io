@@ -80,7 +80,7 @@ namespace WifeGift.Core.Services.ProfileService
 
             var preferences = await _preferenceRepository.GetListByConditionAsync(p => p.UserDataId == userData.Id);
 
-            return userData.Preferences;
+            return preferences ?? Enumerable.Empty<Preference>();
         }
 
         public async Task<bool> AddRangePreferenceAsync(string userId, IEnumerable<Preference> preferences)

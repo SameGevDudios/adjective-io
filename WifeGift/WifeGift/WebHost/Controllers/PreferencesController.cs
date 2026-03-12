@@ -52,7 +52,6 @@ namespace WifeGift.WebHost.Controllers
                 UserDataId = userData.Id,
                 Adjective = dto.Adjective,
                 Weight = dto.Weight,
-                UserData = userData,
             }).ToList();
 
             await _userDataService.AddRangePreferenceAsync(CurrentUserId, preferences);

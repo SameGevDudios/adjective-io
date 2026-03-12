@@ -4,7 +4,7 @@
     {
         public Guid UserDataId { get; set; }
 
-        public required UserData UserData { get; set; }
+        public UserData UserData { get; set; }
 
         public required string Adjective { get; set; }
 
