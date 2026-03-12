@@ -51,9 +51,7 @@ class MoodScreen extends StatelessWidget {
                         if (state is PreferenceState$Success) {
                           return _AdjectiveStaticList(adjectives: state.adjectives);
                         }
-                        return const Center(
-                          child: CircularProgressIndicator(color: Colors.white),
-                        );
+                        return const Center(child: CircularProgressIndicator(color: Colors.white));
                       },
                     ),
                   ),
@@ -66,12 +64,9 @@ class MoodScreen extends StatelessWidget {
       bottomNavigationBar: _BuildBottomNavBar(),
     );
   }
-
 }
 
 class _BuildBottomNavBar extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
