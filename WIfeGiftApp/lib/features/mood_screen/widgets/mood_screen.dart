@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/common/ui_colors.dart';
-import 'package:wife_gift/features/mood_screen/data/models/Adjective.dart';
+import 'package:wife_gift/features/mood_screen/data/models/adjective.dart';
 import 'package:wife_gift/features/mood_screen/data/models/prefix.dart';
 import 'package:wife_gift/features/mood_screen/logic/preference_bloc/preference_bloc.dart';
 import 'package:wife_gift/features/mood_screen/logic/prefix_bloc/prefix_bloc.dart';

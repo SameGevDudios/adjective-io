@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/common/ui_colors.dart';
-import 'package:wife_gift/features/mood_screen/data/models/Adjective.dart';
+import 'package:wife_gift/features/mood_screen/data/models/adjective.dart';
 import 'package:wife_gift/features/mood_screen/data/repositories/preference_repository_impl.dart';
 import 'package:wife_gift/features/mood_screen/logic/adjective_tile_cubit/adjective_tile_cubit.dart';
 
