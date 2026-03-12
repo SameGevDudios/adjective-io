@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wife_gift/common/ui_colors.dart';
 import 'package:wife_gift/features/mood_screen/data/models/Adjective.dart';
 import 'package:wife_gift/features/mood_screen/data/repositories/preference_repository_impl.dart';
 import 'package:wife_gift/features/mood_screen/logic/adjective_tile_cubit/adjective_tile_cubit.dart';
@@ -24,8 +25,8 @@ class AdjectiveTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
             child: Dismissible(
               key: ValueKey(adjective.id),
-              background: _buildBackground(Icons.add, Colors.green, Alignment.centerLeft),
-              secondaryBackground: _buildBackground(Icons.remove, Colors.red, Alignment.centerRight),
+              background: _buildBackground(Icons.add, UiColors.green, Alignment.centerLeft),
+              secondaryBackground: _buildBackground(Icons.remove, UiColors.red, Alignment.centerRight),
               onDismissed: (direction) {
                 final cubit = context.read<AdjectiveTileCubit>();
                 if (direction == DismissDirection.startToEnd) {
@@ -52,7 +53,7 @@ class AdjectiveTile extends StatelessWidget {
                           adjective.title,
                           maxLines: 1,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: UiColors.textLight,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
@@ -77,7 +78,7 @@ class AdjectiveTile extends StatelessWidget {
           alignment: alignment,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Icon(icon, color: Colors.white, size: 35),
+            child: Icon(icon, color: UiColors.textLight, size: 35),
           ),
         ),
       ),
