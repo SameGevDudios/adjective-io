@@ -24,80 +24,80 @@ class MoodScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: UiColors.background,
-      body: Stack(
-        children: [
-          BlocBuilder<PrefixBloc, PrefixState>(
-            builder: (context, state) {
-              final prefix = state is PrefixState$Success ? state.prefix : Prefix.empty();
-              return PrefixWidget(prefix: prefix, size: size);
-            },
-          ),
-
-          RefreshIndicator(
-            color: UiColors.accent,
-            backgroundColor: Colors.white,
-            onRefresh: () => _onRefresh(context),
-            child: CustomScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              slivers: [
-                SliverToBoxAdapter(child: SizedBox(height: size.height * 0.35)),
-
-                BlocBuilder<PreferenceBloc, PreferenceState>(
-                  builder: (context, state) {
-                    if (state is PreferenceState$Success) {
-                      return _AdjectiveSliverList(adjectives: state.adjectives);
-                    }
-                    if (state is PreferenceState$Loading) {
-                      return const SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Center(child: CircularProgressIndicator(color: Colors.white)),
-                      );
-                    }
-                    return const SliverToBoxAdapter(child: SizedBox.shrink());
-                  },
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 100)),
-              ],
+      body: RefreshIndicator(
+        color: UiColors.accent,
+        backgroundColor: Colors.white,
+        onRefresh: () => _onRefresh(context),
+        child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Stack(
+                children: [
+                  BlocBuilder<PrefixBloc, PrefixState>(
+                    builder: (context, state) {
+                      final prefix = state is PrefixState$Success ? state.prefix : Prefix.empty();
+                      return PrefixWidget(prefix: prefix, size: size);
+                    },
+                  ),
+                  Positioned(
+                    top: size.height * 0.35,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: BlocBuilder<PreferenceBloc, PreferenceState>(
+                      builder: (context, state) {
+                        if (state is PreferenceState$Success) {
+                          return _AdjectiveStaticList(adjectives: state.adjectives);
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(color: Colors.white),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      bottomNavigationBar: _buildBottomNav(context),
+      bottomNavigationBar: _BuildBottomNavBar(),
     );
   }
 
-  Widget _buildBottomNav(BuildContext context) {
+}
+
+class _BuildBottomNavBar extends StatelessWidget {
+
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 80,
       decoration: const BoxDecoration(color: UiColors.accentDark),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _navIcon(Icons.home, isSelected: true),
-          _navIcon(Icons.format_list_bulleted),
-          _navIcon(Icons.settings_outlined),
+          Icon(Icons.home, color: Colors.white, size: 34),
+          Icon(Icons.format_list_bulleted, color: Colors.white54, size: 34),
+          Icon(Icons.settings_outlined, color: Colors.white54, size: 34),
         ],
       ),
     );
   }
-
-  Widget _navIcon(IconData icon, {bool isSelected = false}) {
-    return IconButton(
-      icon: Icon(icon, color: isSelected ? Colors.white : Colors.white.withOpacity(0.5), size: 34),
-      onPressed: () {},
-    );
-  }
 }
 
-class _AdjectiveSliverList extends StatefulWidget {
+class _AdjectiveStaticList extends StatefulWidget {
   final List<Adjective> adjectives;
-  const _AdjectiveSliverList({required this.adjectives});
+  const _AdjectiveStaticList({required this.adjectives});
 
   @override
-  State<_AdjectiveSliverList> createState() => _AdjectiveSliverListState();
+  State<_AdjectiveStaticList> createState() => _AdjectiveStaticListState();
 }
 
-class _AdjectiveSliverListState extends State<_AdjectiveSliverList> {
+class _AdjectiveStaticListState extends State<_AdjectiveStaticList> {
   late List<Adjective> _items;
 
   @override
@@ -107,7 +107,7 @@ class _AdjectiveSliverListState extends State<_AdjectiveSliverList> {
   }
 
   @override
-  void didUpdateWidget(covariant _AdjectiveSliverList oldWidget) {
+  void didUpdateWidget(covariant _AdjectiveStaticList oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.adjectives != oldWidget.adjectives) {
       setState(() {
@@ -118,19 +118,21 @@ class _AdjectiveSliverListState extends State<_AdjectiveSliverList> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate((context, index) {
-        final item = _items[index];
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: _items.length,
+      itemBuilder: (context, index) {
         return AdjectiveTile(
-          key: ValueKey(item.id),
-          adjective: item,
+          key: ValueKey(_items[index].id),
+          adjective: _items[index],
           onDismissed: (_) {
             setState(() {
               _items.removeAt(index);
             });
           },
         );
-      }, childCount: _items.length),
+      },
     );
   }
 }
