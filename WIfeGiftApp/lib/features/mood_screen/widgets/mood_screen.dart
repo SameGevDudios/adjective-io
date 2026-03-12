@@ -5,8 +5,8 @@ import 'package:wife_gift/features/mood_screen/data/models/Adjective.dart';
 import 'package:wife_gift/features/mood_screen/data/models/prefix.dart';
 import 'package:wife_gift/features/mood_screen/logic/preference_bloc/preference_bloc.dart';
 import 'package:wife_gift/features/mood_screen/logic/prefix_bloc/prefix_bloc.dart';
-import 'package:wife_gift/features/mood_screen/widgets/adjective_tile.dart';
-import 'package:wife_gift/features/mood_screen/widgets/prefix_widget.dart';
+import 'adjective_tile.dart';
+import 'prefix_widget.dart';
 
 class MoodScreen extends StatelessWidget {
   const MoodScreen({super.key});
