@@ -14,7 +14,11 @@ class ThoughtsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Мои мысли о себе',
-          style: TextStyle(fontSize: 32, color: UiColors.textLight, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 32,
+            color: UiColors.textLight,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: UiColors.accentDark,
       ),
@@ -23,30 +27,48 @@ class ThoughtsScreen extends StatelessWidget {
             context.read<PreferenceBloc>().add(PreferenceEvent$AllPreferencesRequested()),
         child: BlocBuilder<PreferenceBloc, PreferenceState>(
           builder: (context, state) {
-            if (state is PreferenceState$Initial) {
-              return Center(
-                child: SizedBox(
-                  width: 72,
-                  height: 72,
-                  child: RefreshProgressIndicator(
-                    color: UiColors.white,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    strokeWidth: 4,
+            return CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              slivers: [
+                if (state is PreferenceState$Loading)
+                  const SliverFillRemaining(
+                    child: Center(
+                      child: SizedBox(
+                        width: 72,
+                        height: 72,
+                        child: RefreshProgressIndicator(
+                          color: UiColors.white,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          strokeWidth: 4,
+                        ),
+                      ),
+                    ),
+                  )
+                else if (state is PreferenceState$Success)
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                          return AdjectiveTile(adjective: state.adjectives[index]);
+                        },
+                        childCount: state.adjectives.length,
+                      ),
+                    ),
+                  )
+                else
+                  const SliverFillRemaining(
+                    child: Center(
+                      child: Text(
+                        'Здесь пока пусто...\nПотяни вниз, чтобы обновить',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: UiColors.textLight),
+                      ),
+                    ),
                   ),
-                ),
-              );
-            }
-
-            if (state is PreferenceState$Success) {
-              return ListView(
-                children: state.adjectives
-                    .map((adjective) => AdjectiveTile(adjective: adjective))
-                    .toList(),
-              );
-            }
-
-            return const SizedBox.shrink();
+              ],
+            );
           },
         ),
       ),
