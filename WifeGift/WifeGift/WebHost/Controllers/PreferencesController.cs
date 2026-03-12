@@ -22,7 +22,7 @@ namespace WifeGift.WebHost.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PreferenceReadDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<PreferenceReadDto>>> GetSampled()
         {
             var allPreferences = await _userDataService.GetUserPreferencesAsync(CurrentUserId);
 
