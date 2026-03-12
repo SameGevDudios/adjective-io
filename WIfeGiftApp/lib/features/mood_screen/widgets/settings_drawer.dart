@@ -12,7 +12,7 @@ class SettingsDrawer extends StatelessWidget {
       backgroundColor: Colors.white,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 60),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -20,7 +20,7 @@ class SettingsDrawer extends StatelessWidget {
                 'Настройки',
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 32),
               OutlinedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
