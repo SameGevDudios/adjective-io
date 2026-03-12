@@ -6,10 +6,11 @@ import 'package:wife_gift/common/ui_colors.dart';
 import 'preference.dart';
 
 final class Adjective {
+  final String id;
   final String title;
   final Color color;
 
-  Adjective({required this.title, required this.color});
+  Adjective({required this.id, required this.title, required this.color});
 
   factory Adjective.fromPreference(Preference preference) {
     final Color color;
@@ -25,6 +26,6 @@ final class Adjective {
       color = UiColors.negativeAdjective;
     }
 
-    return Adjective(title: preference.adjective, color: color);
+    return Adjective(id: preference.id, title: preference.adjective, color: color);
   }
 }
