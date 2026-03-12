@@ -51,21 +51,35 @@ class PrefixWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(height: size.height * 0.12),
-              Text(
-                prefix.title,
-                style: const TextStyle(
-                  color: UiColors.textLight,
-                  fontSize: 72,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -2,
+              SizedBox(
+                width: size.width * 0.75,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    prefix.title,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: UiColors.textLight,
+                      fontSize: 72,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -2,
+                    ),
+                  ),
                 ),
               ),
-              Text(
-                prefix.subtitle,
-                style: const TextStyle(
-                  color: UiColors.textLight,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
+              SizedBox(
+                width: size.width * 0.65,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    prefix.subtitle,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: UiColors.textLight,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ],
