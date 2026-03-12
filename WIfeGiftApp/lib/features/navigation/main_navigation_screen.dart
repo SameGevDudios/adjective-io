@@ -79,7 +79,7 @@ class _BottomNavBar extends StatelessWidget {
           ),
           _NavBarItem(
             icon: Icons.settings_outlined,
-            isSelected: true,
+            isSelected: false,
             onTap: () => scaffoldKey.currentState?.openEndDrawer(),
           ),
         ],
