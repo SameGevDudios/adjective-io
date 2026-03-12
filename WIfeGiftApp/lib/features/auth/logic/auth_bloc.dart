@@ -102,7 +102,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // 2. Получаем текущие данные (параллельно для скорости)
       final results = await Future.wait([
         _prefixRepository.getAllPrefixes(),
-        _preferenceRepository.getAllPreferences(),
+        _preferenceRepository.getSampledPreferences(),
       ]);
 
       final List<Prefix> currentPrefixes = results[0] as List<Prefix>;

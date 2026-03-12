@@ -25,7 +25,7 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
     emit(PreferenceState$Loading());
 
     try {
-      final preferences = await _repository.getAllPreferences();
+      final preferences = await _repository.getSampledPreferences();
 
       final adjectives = preferences.map(Adjective.fromPreference).toList();
 

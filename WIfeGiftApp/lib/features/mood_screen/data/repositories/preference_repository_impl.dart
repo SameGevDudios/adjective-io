@@ -10,9 +10,9 @@ class PreferenceRepositoryImpl extends PreferenceRepository {
   PreferenceRepositoryImpl(PreferenceDataSource dataSource) : _dataSource = dataSource;
 
   @override
-  Future<List<Preference>> getAllPreferences() async {
+  Future<List<Preference>> getSampledPreferences() async {
     try {
-      return await _dataSource.getAll();
+      return await _dataSource.getSampled();
     } on DioException catch (e) {
       throw _handleError(e);
     }
