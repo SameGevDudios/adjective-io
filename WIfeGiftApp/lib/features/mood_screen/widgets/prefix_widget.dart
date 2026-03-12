@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wife_gift/common/ui_colors.dart';
 import 'package:wife_gift/features/mood_screen/data/models/prefix.dart';
