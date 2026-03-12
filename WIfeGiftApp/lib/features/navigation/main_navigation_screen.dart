@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/common/ui_colors.dart';
+import 'package:wife_gift/features/mood_screen/logic/preference_bloc/preference_bloc.dart';
 import 'package:wife_gift/features/mood_screen/widgets/mood_screen.dart';
 import 'package:wife_gift/features/mood_screen/widgets/settings_drawer.dart';
 import 'package:wife_gift/features/thoughts_screen/widgets/thoughts_screen.dart';
@@ -69,12 +71,18 @@ class _BottomNavBar extends StatelessWidget {
           _NavBarItem(
             icon: Icons.home,
             isSelected: selectedIndex == 0,
-            onTap: () => onItemTapped(0),
+            onTap: ()  {
+              context.read<PreferenceBloc>().add(PreferenceEvent$PreferencesRequested());
+              onItemTapped(0);
+              },
           ),
           _NavBarItem(
             icon: Icons.format_list_bulleted_outlined,
             isSelected: selectedIndex == 1,
-            onTap: () => onItemTapped(1),
+            onTap: ()  {
+              context.read<PreferenceBloc>().add(PreferenceEvent$AllPreferencesRequested());
+              onItemTapped(1);
+            },
           ),
           _NavBarItem(
             icon: Icons.settings_outlined,
