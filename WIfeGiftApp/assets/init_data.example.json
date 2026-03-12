@@ -1,6 +1,6 @@
 {
   "prefixes": [
-    { "id": "", "title": "Ты", "subtitle": "самая..." }
+    { "title": "Ты", "subtitle": "самая..." }
   ],
   "preferences": [
     { "adjective": "Любимая", "weight": 0.0 }
