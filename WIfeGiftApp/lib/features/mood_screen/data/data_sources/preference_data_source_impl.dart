@@ -9,6 +9,15 @@ class PreferenceDataSourceImpl extends PreferenceDataSource {
   PreferenceDataSourceImpl(Dio dio) : _dio = dio;
 
   @override
+  Future<List<Preference>> getAll() async {
+    final response = await _dio.get(ApiConstants.preferencesAll);
+
+    return (response.data as List)
+        .map((json) => Preference.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
   Future<List<Preference>> getSampled() async {
     final response = await _dio.get(ApiConstants.preferences);
     return (response.data as List)
