@@ -35,8 +35,15 @@ class MoodScreen extends StatelessWidget {
               children: [
                 BlocBuilder<PrefixBloc, PrefixState>(
                   builder: (context, state) {
-                    final prefix = state is PrefixState$Success ? state.prefix : Prefix.empty();
-                    return PrefixWidget(prefix: prefix, size: size);
+                    if (state is PrefixState$Success) {
+                      return PrefixWidget(prefix: state.prefix, size: size);
+                    }
+
+                    if(state is PrefixState$Error) {
+                      return PrefixWidget(prefix: Prefix.empty(), size: size);
+                    }
+
+                    return PrefixWidget(prefix: Prefix(title: '', subtitle: ''), size: size);
                   },
                 ),
                 Positioned(
