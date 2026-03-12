@@ -7,13 +7,9 @@ import 'package:wife_gift/features/mood_screen/logic/adjective_tile_cubit/adject
 
 class AdjectiveTile extends StatelessWidget {
   final Adjective adjective;
-  final Function(DismissDirection) onDismissed;
+  final Function(DismissDirection)? onDismissed;
 
-  const AdjectiveTile({
-    required this.adjective,
-    required this.onDismissed,
-    super.key,
-  });
+  const AdjectiveTile({required this.adjective, this.onDismissed, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,49 +17,61 @@ class AdjectiveTile extends StatelessWidget {
       create: (context) => AdjectiveTileCubit(context.read<PreferenceRepositoryImpl>()),
       child: Builder(
         builder: (context) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
-            child: Dismissible(
-              key: ValueKey(adjective.id),
-              background: _buildBackground(Icons.add, UiColors.green, Alignment.centerLeft),
-              secondaryBackground: _buildBackground(Icons.remove, UiColors.red, Alignment.centerRight),
-              onDismissed: (direction) {
-                final cubit = context.read<AdjectiveTileCubit>();
-                if (direction == DismissDirection.startToEnd) {
-                  cubit.increment(adjective.id);
-                } else {
-                  cubit.decrement(adjective.id);
-                }
-                onDismissed(direction);
-              },
-              child: SizedBox(
-                width: double.infinity,
-                height: 91,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: adjective.color,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Center(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          adjective.title,
-                          maxLines: 1,
-                          style: const TextStyle(
-                            color: UiColors.textLight,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+          Widget content = SizedBox(
+            width: double.infinity,
+            height: 91,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: adjective.color,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Center(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      adjective.title,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        color: UiColors.textLight,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
               ),
             ),
+          );
+
+          if (onDismissed != null) {
+            content = Dismissible(
+              key: ValueKey(adjective.id),
+              background: _buildBackground(Icons.add, UiColors.green, Alignment.centerLeft),
+              secondaryBackground: _buildBackground(
+                Icons.remove,
+                UiColors.red,
+                Alignment.centerRight,
+              ),
+              onDismissed: (direction) {
+                final cubit = context.read<AdjectiveTileCubit>();
+
+                if (direction == DismissDirection.startToEnd) {
+                  cubit.increment(adjective.id);
+                } else {
+                  cubit.decrement(adjective.id);
+                }
+
+                onDismissed?.call(direction);
+              },
+              child: content,
+            );
+          }
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
+            child: content,
           );
         },
       ),
