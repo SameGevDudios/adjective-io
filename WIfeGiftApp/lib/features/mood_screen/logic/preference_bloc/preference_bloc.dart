@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/common/ui_colors.dart';
-import 'package:wife_gift/features/mood_screen/data/models/Adjective.dart';
+import 'package:wife_gift/features/mood_screen/data/models/adjective.dart';
 import 'package:wife_gift/features/mood_screen/data/models/preference.dart';
 import 'package:wife_gift/features/mood_screen/data/repositories/preference_repository.dart';
 
