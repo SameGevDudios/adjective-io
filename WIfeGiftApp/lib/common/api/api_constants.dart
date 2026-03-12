@@ -12,6 +12,7 @@ class ApiConstants {
   static const String manageInfo = '/api/v1/manage/info';
 
   static const String preferences = '/api/v1/preferences';
+  static const String preferencesAll = '/api/v1/preferences/all';
   static String incrementPreference(String id) => '/api/v1/preferences/$id/increment';
   static String decrementPreference(String id) => '/api/v1/preferences/$id/decrement';
 
