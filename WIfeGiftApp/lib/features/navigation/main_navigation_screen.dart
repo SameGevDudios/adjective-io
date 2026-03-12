@@ -17,19 +17,23 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    const MoodScreen(),
-    const ThoughtsScreen(),
-  ];
+  final List<Widget> _pages = [const MoodScreen(), const ThoughtsScreen()];
 
-  void _onItemTapped(int index) {
+  bool _onItemTapped(int index) {
+    if (index == _selectedIndex) {
+      return false;
+    }
+
     if (index == 2) {
       _scaffoldKey.currentState?.openEndDrawer();
-      return;
+      return false;
     }
+
     setState(() {
       _selectedIndex = index;
     });
+
+    return true;
   }
 
   @override
@@ -51,7 +55,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 class _BottomNavBar extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final int selectedIndex;
-  final ValueChanged<int> onItemTapped;
+  final bool Function(int) onItemTapped;
 
   const _BottomNavBar({
     required this.scaffoldKey,
@@ -71,15 +75,18 @@ class _BottomNavBar extends StatelessWidget {
           _NavBarItem(
             icon: Icons.home,
             isSelected: selectedIndex == 0,
-            onTap: ()  {
-              context.read<PreferenceBloc>().add(PreferenceEvent$PreferencesRequested());
-              onItemTapped(0);
-              },
+            onTap: () {
+              final canNavigate = onItemTapped(0);
+
+              if (canNavigate) {
+                context.read<PreferenceBloc>().add(PreferenceEvent$PreferencesRequested());
+              }
+            },
           ),
           _NavBarItem(
             icon: Icons.format_list_bulleted_outlined,
             isSelected: selectedIndex == 1,
-            onTap: ()  {
+            onTap: () {
               context.read<PreferenceBloc>().add(PreferenceEvent$AllPreferencesRequested());
               onItemTapped(1);
             },
