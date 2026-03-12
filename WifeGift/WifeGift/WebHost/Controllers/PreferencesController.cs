@@ -22,7 +22,7 @@ namespace WifeGift.WebHost.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PreferenceReadDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<PreferenceReadDto>>> GetSampled()
         {
             var allPreferences = await _userDataService.GetUserPreferencesAsync(CurrentUserId);
 
@@ -39,6 +39,19 @@ namespace WifeGift.WebHost.Controllers
                 .Select(p => new PreferenceReadDto(p.Id, p.Adjective, p.Weight));
 
             return Ok(response);
+        }
+
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<PreferenceReadDto>>> GetAll()
+        {
+            var preferences = await _userDataService.GetUserPreferencesAsync(CurrentUserId);
+
+            var response = preferences.OrderBy(p => p.Weight)
+                .Reverse()
+                .Select(p => new PreferenceReadDto(p.Id, p.Adjective, p.Weight))
+                .ToList();
+
+            return response;
         }
 
         [HttpPost()]
