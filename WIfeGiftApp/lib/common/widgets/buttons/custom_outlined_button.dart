@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
   final String? label;
+  final TextStyle? textStyle;
   final Color color;
   final double width;
   final VoidCallback? onTap;
 
   const CustomOutlinedButton({
     this.label,
+    this.textStyle,
     required this.color,
     required this.width,
     this.onTap,
@@ -21,7 +23,7 @@ class CustomOutlinedButton extends StatelessWidget {
       style: OutlinedButton.styleFrom(
         side: BorderSide(width: width, color: color),
       ),
-      child: label != null ? Text(label!) : null,
+      child: label != null ? Text(label!, style: textStyle ?? TextStyle(color: color)) : null,
     );
   }
 }
