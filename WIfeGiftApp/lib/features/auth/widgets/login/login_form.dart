@@ -48,6 +48,7 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           CustomOutlinedFormField(
             controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
             label: 'Почта',
             icon: Icons.email_outlined,
             color: UiColors.textPrimary,

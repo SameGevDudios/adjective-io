@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomOutlinedFormField extends StatelessWidget {
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
   final String? label;
   final IconData? icon;
   final Color color;
@@ -9,12 +10,13 @@ class CustomOutlinedFormField extends StatelessWidget {
   final String? Function(String?)? validator;
 
   const CustomOutlinedFormField({
+    this.controller,
+    this.keyboardType,
     this.label,
     this.icon,
     required this.color,
     this.obscureText = false,
     this.validator,
-    this.controller,
     super.key,
   });
 
@@ -27,6 +29,7 @@ class CustomOutlinedFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: icon != null ? Icon(icon!, color: color) : null,
