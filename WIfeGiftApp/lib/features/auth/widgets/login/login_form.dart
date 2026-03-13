@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 16),
           CustomOutlinedFormField(
-            controller: _emailController,
+            controller: _passwordController,
             label: 'Пароль',
             icon: Icons.lock_outline,
             color: UiColors.textPrimary,
