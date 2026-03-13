@@ -75,7 +75,12 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(
             width: double.infinity,
             height: 50,
-            child: CustomOutlinedButton(label: 'Войти', color: UiColors.textPrimary, width: 2),
+            child: CustomOutlinedButton(
+              label: 'Войти',
+              color: UiColors.textPrimary,
+              width: 2,
+              onTap: _onLoginPressed,
+            ),
           ),
         ],
       ),
