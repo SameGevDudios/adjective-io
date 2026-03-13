@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/common/ui_colors.dart';
 import 'package:wife_gift/features/mood_screen/logic/preference_bloc/preference_bloc.dart';
 import 'package:wife_gift/features/mood_screen/widgets/mood_screen.dart';
-import 'package:wife_gift/features/mood_screen/widgets/settings_drawer.dart';
+import 'package:wife_gift/features/navigation/widgets/settings_drawer.dart';
 import 'package:wife_gift/features/thoughts_screen/widgets/thoughts_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {

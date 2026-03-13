@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/features/auth/logic/auth_bloc.dart';
 import 'package:wife_gift/features/auth/widgets/login/login_screen.dart';
-import 'package:wife_gift/features/navigation/main_navigation_screen.dart';
+import 'package:wife_gift/features/navigation/widgets/main_navigation_screen.dart';
 
 class AuthenticationGate extends StatelessWidget {
   const AuthenticationGate({super.key});
