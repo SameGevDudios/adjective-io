@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wife_gift/common/ui_colors.dart';
 import 'package:wife_gift/features/auth/logic/auth_bloc.dart';
 
 class SettingsDrawer extends StatelessWidget {
@@ -9,7 +10,7 @@ class SettingsDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.7,
-      backgroundColor: Colors.white,
+      backgroundColor: UiColors.white,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 60),
