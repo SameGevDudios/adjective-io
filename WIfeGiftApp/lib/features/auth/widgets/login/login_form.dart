@@ -65,6 +65,7 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 4),
           LinkLabel(
             message: 'Нет аккаунта',
+            color: UiColors.textSecondary,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_) => const RegisterScreen()));
             },
