@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wife_gift/common/ui_colors.dart';
 import 'package:wife_gift/common/utils/app_validators.dart';
 import 'package:wife_gift/common/widgets/buttons/link_label.dart';
+import 'package:wife_gift/common/widgets/form_fields/custom_outlined_form_field.dart';
 import 'package:wife_gift/features/auth/data/models/auth_dtos.dart';
 import 'package:wife_gift/features/auth/logic/auth_bloc.dart';
 import 'package:wife_gift/features/auth/widgets/register/register_screen.dart';
@@ -43,24 +45,19 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
+          CustomOutlinedFormField(
             controller: _emailController,
-            decoration: const InputDecoration(
-              labelText: 'Email',
-              prefixIcon: Icon(Icons.email_outlined),
-              border: OutlineInputBorder(),
-            ),
-            keyboardType: TextInputType.emailAddress,
+            label: 'Почта',
+            icon: Icons.email_outlined,
+            color: UiColors.textPrimary,
             validator: AppValidators.validateEmail,
           ),
           const SizedBox(height: 16),
-          TextFormField(
-            controller: _passwordController,
-            decoration: const InputDecoration(
-              labelText: 'Пароль',
-              prefixIcon: Icon(Icons.lock_outline),
-              border: OutlineInputBorder(),
-            ),
+          CustomOutlinedFormField(
+            controller: _emailController,
+            label: 'Пароль',
+            icon: Icons.lock_outline,
+            color: UiColors.textPrimary,
             obscureText: true,
             validator: AppValidators.validatePassword,
           ),
