@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wife_gift/common/ui_colors.dart';
+import 'package:wife_gift/common/widgets/buttons/custom_outlined_button.dart';
+import 'package:wife_gift/common/widgets/form_fields/custom_outlined_form_field.dart';
 import 'package:wife_gift/features/auth/data/models/requests/register_request.dart';
 import 'package:wife_gift/features/auth/logic/auth_bloc.dart';
 import 'package:wife_gift/common/utils/app_validators.dart';
@@ -44,36 +47,29 @@ class _RegisterFormState extends State<RegisterForm> {
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
+          CustomOutlinedFormField(
             controller: _emailController,
-            decoration: const InputDecoration(
-              labelText: 'Email',
-              prefixIcon: Icon(Icons.email_outlined),
-              border: OutlineInputBorder(),
-            ),
             keyboardType: TextInputType.emailAddress,
+            label: 'Email',
+            color: UiColors.textPrimary,
+            icon: Icons.email_outlined,
             validator: AppValidators.validateEmail,
           ),
           const SizedBox(height: 16),
-          TextFormField(
+          CustomOutlinedFormField(
             controller: _passwordController,
-            decoration: const InputDecoration(
-              labelText: 'Пароль',
-              prefixIcon: Icon(Icons.lock_outline),
-              border: OutlineInputBorder(),
-            ),
+            label: 'Пароль',
+            color: UiColors.textPrimary,
+            icon: Icons.lock_outline,
             obscureText: true,
             validator: AppValidators.validatePassword,
           ),
           const SizedBox(height: 16),
-          TextFormField(
+          CustomOutlinedFormField(
             controller: _confirmPasswordController,
-            decoration: const InputDecoration(
-              labelText: 'Подтвердите пароль',
-              prefixIcon: Icon(Icons.lock_clock_outlined),
-              border: OutlineInputBorder(),
-            ),
-            obscureText: true,
+            label: 'Подтвердите пароль',
+            color: UiColors.textPrimary,
+            icon: Icons.lock_clock_outlined,
             validator: (value) =>
                 AppValidators.validateConfirmPassword(value, _passwordController.text),
           ),
@@ -81,9 +77,11 @@ class _RegisterFormState extends State<RegisterForm> {
           SizedBox(
             width: double.infinity,
             height: 50,
-            child: ElevatedButton(
-              onPressed: _onRegisterPressed,
-              child: const Text('Зарегистрироваться'),
+            child: CustomOutlinedButton(
+              label: 'Зарегистрироваться',
+              color: UiColors.textPrimary,
+              width: 2,
+              onTap: _onRegisterPressed,
             ),
           ),
         ],
