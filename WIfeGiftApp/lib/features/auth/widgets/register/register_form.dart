@@ -76,7 +76,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 32),
           SizedBox(
             width: double.infinity,
-            height: 50,
+            height: 72,
             child: CustomOutlinedButton(
               label: 'Зарегистрироваться',
               color: UiColors.textPrimary,
