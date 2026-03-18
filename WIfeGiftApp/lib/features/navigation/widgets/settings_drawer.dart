@@ -113,8 +113,8 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
       },
       acceptLabel: 'Добавить',
       onAccept: () {
-        final title = _prefixTitleController.text;
-        final subtitle = _prefixSubtitleController.text;
+        final title = _prefixTitleController.text.trim();
+        final subtitle = _prefixSubtitleController.text.trim();
 
         if (title.isNotEmpty && subtitle.isNotEmpty) {
           context.read<PrefixBloc>().add(
