@@ -105,7 +105,7 @@ class _ThoughtsScreenState extends State<ThoughtsScreen> {
       },
       acceptLabel: 'Добавить',
       onAccept: () {
-        final text = _newThoughtController.text;
+        final text = _newThoughtController.text.trim();
 
         if (text.isNotEmpty) {
           context.read<PreferenceBloc>()
