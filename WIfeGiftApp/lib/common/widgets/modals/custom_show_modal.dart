@@ -64,18 +64,22 @@ class CustomShowModal extends StatelessWidget {
                       LinkLabel(
                         message: acceptLabel!,
                         onTap: onAccept!,
-                        color: UiColors.textPrimary,
-                        decoration: TextDecoration.none,
-                        fontWeight: FontWeight.bold,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: UiColors.textPrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     const Spacer(),
                     if (denyLabel != null)
                       LinkLabel(
                         message: denyLabel!,
                         onTap: onDeny!,
-                        color: UiColors.textSecondary,
-                        decoration: TextDecoration.none,
-                        fontWeight: FontWeight.bold,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: UiColors.textSecondary,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                   ],
                 ),
