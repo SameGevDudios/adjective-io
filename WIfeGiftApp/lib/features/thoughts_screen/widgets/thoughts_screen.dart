@@ -16,7 +16,7 @@ class ThoughtsScreen extends StatefulWidget {
 }
 
 class _ThoughtsScreenState extends State<ThoughtsScreen> {
-  final TextEditingController _newThoughtController = TextEditingController();
+  final _newThoughtController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
