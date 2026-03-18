@@ -44,19 +44,21 @@ class CustomShowModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsetsGeometry.symmetric(horizontal: 48, vertical: 240),
-      child: Dialog(
-        child: DecoratedBox(
-          decoration: BoxDecoration(color: UiColors.white, borderRadius: BorderRadius.circular(20)),
-          child: Padding(
-            padding: EdgeInsetsGeometry.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ?title,
-                Builder(builder: builder),
-                Row(
+    return Dialog(
+      child: DecoratedBox(
+        decoration: BoxDecoration(color: UiColors.white, borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: EdgeInsetsGeometry.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ?title,
+              const SizedBox(height: 12),
+              Builder(builder: builder),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
                   children: [
                     if (acceptLabel != null)
                       LinkLabel(
@@ -77,8 +79,8 @@ class CustomShowModal extends StatelessWidget {
                       ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
