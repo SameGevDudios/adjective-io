@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wife_gift/common/ui_colors.dart';
+import 'package:wife_gift/common/widgets/form_fields/custom_outlined_form_field.dart';
+import 'package:wife_gift/common/widgets/modals/custom_show_modal.dart';
 import 'package:wife_gift/features/auth/logic/auth_bloc.dart';
+import 'package:wife_gift/features/mood_screen/data/models/preference.dart';
+import 'package:wife_gift/features/mood_screen/data/models/prefix.dart';
+import 'package:wife_gift/features/mood_screen/logic/preference_bloc/preference_bloc.dart';
+import 'package:wife_gift/features/mood_screen/logic/prefix_bloc/prefix_bloc.dart';
 
-class SettingsDrawer extends StatelessWidget {
+class SettingsDrawer extends StatefulWidget {
   const SettingsDrawer({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _SettingsDrawerState();
+}
+
+class _SettingsDrawerState extends State<SettingsDrawer> {
+  final _prefixTitleController = TextEditingController();
+  final _prefixSubtitleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +38,7 @@ class SettingsDrawer extends StatelessWidget {
               const SizedBox(height: 32),
               OutlinedButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  // TODO: Prefix add logic
+                  _showModal(context);
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.black,
@@ -68,6 +81,52 @@ class SettingsDrawer extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showModal(BuildContext context) {
+    CustomShowModal.show(
+      context: context,
+      label: Center(
+        child: Text(
+          'Новый заголовок',
+          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: UiColors.textDark),
+        ),
+      ),
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomOutlinedFormField(
+              label: 'Первая строчка',
+              color: UiColors.textPrimary,
+              controller: _prefixTitleController,
+            ),
+            const SizedBox(height: 12),
+            CustomOutlinedFormField(
+              label: 'Вторая строчка',
+              color: UiColors.textPrimary,
+              controller: _prefixSubtitleController,
+            ),
+          ],
+        );
+      },
+      acceptLabel: 'Добавить',
+      onAccept: () {
+        final title = _prefixTitleController.text;
+        final subtitle = _prefixSubtitleController.text;
+
+        if (title.isNotEmpty && subtitle.isNotEmpty) {
+          context.read<PrefixBloc>().add(
+            PrefixEvent$PrefixAddRequested(
+              prefixes: [Prefix(title: title, subtitle: subtitle)],
+            ),
+          );
+          Navigator.of(context).pop();
+        }
+      },
+      denyLabel: 'Отмена',
+      onDeny: () => Navigator.of(context).pop(),
     );
   }
 }
